@@ -1,6 +1,8 @@
 package com.psl.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,5 +20,11 @@ public class InventoryController {
 	public void addProducts(@RequestBody Inventory i)
 	{
 		service.addProducts(i);
+	}
+	
+	@GetMapping("/inventory/{product_id}")
+	public Inventory getProducts(@PathVariable int product_id)
+	{
+		return service.getProducts(product_id);
 	}
 }

@@ -16,4 +16,9 @@ public class InventoryService {
 	{
 		dao.save(i);
 	}
+	
+	public Inventory getProducts(int id)
+	{
+		return dao.findById(id).get();
+	}
 }

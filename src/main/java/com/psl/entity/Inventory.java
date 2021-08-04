@@ -8,19 +8,13 @@ import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.ToString;
-
 @Entity
 public class Inventory {
 
 	@Id
 	@GeneratedValue
 	private int product_id;
-	@NonNull
+	@NotNull
 	private String product_name;
 	@NotNull
 	private double price;
@@ -98,7 +92,7 @@ public class Inventory {
 	public void setYearly_quota_per_user(String yearly_quota_per_user) {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 	}
-	public Inventory(int product_id, @NonNull String product_name, double price, int stock, String product_group,
+	public Inventory(int product_id, @NotNull String product_name, double price, int stock, String product_group,
 			String category, int loe_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
 			String yearly_quota_per_user) {
 		super();
