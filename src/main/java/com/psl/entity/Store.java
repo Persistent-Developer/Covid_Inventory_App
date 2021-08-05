@@ -1,8 +1,14 @@
 package com.psl.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Store {
@@ -14,6 +20,59 @@ public class Store {
 	private String is_active;
 	private int no_of_timeslots;
 	private int slot_duration;
+	
+	@OneToMany(targetEntity = StoreBreaks.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="fk1_storeid",referencedColumnName = "id")
+	private List<StoreBreaks> sblist=new ArrayList<>();
+	
+	@OneToMany(targetEntity = StoreHoliday.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="fk2_storeid",referencedColumnName = "id")
+	private List<StoreHoliday> shlist=new ArrayList<>();
+	
+	@OneToMany(targetEntity = StoreTime.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="fk3_storeid",referencedColumnName = "id")
+	private List<StoreTime> stlist=new ArrayList<>();
+	
+	@OneToMany(targetEntity = TimeSlots.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="fk4_storeid",referencedColumnName = "id")
+	private List<TimeSlots> tslist=new ArrayList<>();
+	
+	public Store() {
+		super();
+	}
+	
+	public Store(int id, String name, String is_active, int no_of_timeslots, int slot_duration,
+			List<StoreBreaks> sblist, List<StoreHoliday> shlist, List<StoreTime> stlist, List<TimeSlots> tslist) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.is_active = is_active;
+		this.no_of_timeslots = no_of_timeslots;
+		this.slot_duration = slot_duration;
+		this.sblist = sblist;
+		this.shlist = shlist;
+		this.stlist = stlist;
+		this.tslist = tslist;
+	}
+	
+	public List<StoreBreaks> getSblist() {
+		return sblist;
+	}
+	public void setSblist(List<StoreBreaks> sblist) {
+		this.sblist = sblist;
+	}
+	public List<StoreHoliday> getShlist() {
+		return shlist;
+	}
+	public void setShlist(List<StoreHoliday> shlist) {
+		this.shlist = shlist;
+	}
+	public List<StoreTime> getStlist() {
+		return stlist;
+	}
+	public void setStlist(List<StoreTime> stlist) {
+		this.stlist = stlist;
+	}
 	public int getId() {
 		return id;
 	}
@@ -44,22 +103,16 @@ public class Store {
 	public void setSlot_duration(int slot_duration) {
 		this.slot_duration = slot_duration;
 	}
-	public Store(int id, String name, String is_active, int no_of_timeslots, int slot_duration) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.is_active = is_active;
-		this.no_of_timeslots = no_of_timeslots;
-		this.slot_duration = slot_duration;
-	}
-	public Store() {
-		super();
-	}
+
 	@Override
 	public String toString() {
 		return "Store [id=" + id + ", name=" + name + ", is_active=" + is_active + ", no_of_timeslots="
-				+ no_of_timeslots + ", slot_duration=" + slot_duration + "]";
+				+ no_of_timeslots + ", slot_duration=" + slot_duration + ", sblist=" + sblist + ", shlist=" + shlist
+				+ ", stlist=" + stlist + ", tslist=" + tslist + "]";
 	}
+	
+	
+
 	
 	
 }
