@@ -1,9 +1,17 @@
 package com.psl.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -26,6 +34,21 @@ public class Inventory {
 	private String item_type;
 	private String monthly_quota_per_user;
 	private String yearly_quota_per_user;
+	
+	@ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name="OrderDetails",
+			joinColumns = {@JoinColumn(name="fk_product_id")},
+			inverseJoinColumns = {@JoinColumn (name="fk_order_id")}
+			)
+	private List<Orders> odList= new ArrayList<>();
+	
+	
+	public List<Orders> getOdList() {
+		return odList;
+	}
+	public void setOdList(List<Orders> odList) {
+		this.odList = odList;
+	}
 	public int getProduct_id() {
 		return product_id;
 	}
@@ -92,9 +115,14 @@ public class Inventory {
 	public void setYearly_quota_per_user(String yearly_quota_per_user) {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 	}
-	public Inventory(int product_id, @NotNull String product_name, double price, int stock, String product_group,
+	//constr need to add fk
+	
+	public Inventory() {
+		super();
+	}
+	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
 			String category, int loe_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
-			String yearly_quota_per_user) {
+			String yearly_quota_per_user, List<Orders> odList) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
@@ -107,9 +135,7 @@ public class Inventory {
 		this.item_type = item_type;
 		this.monthly_quota_per_user = monthly_quota_per_user;
 		this.yearly_quota_per_user = yearly_quota_per_user;
-	}
-	public Inventory() {
-		super();
+		this.odList = odList;
 	}
 	@Override
 	public String toString() {
@@ -117,8 +143,9 @@ public class Inventory {
 				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category
 				+ ", loe_stock_indicator=" + loe_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
 				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
-				+ yearly_quota_per_user + "]";
+				+ yearly_quota_per_user + ", odList=" + odList + "]";
 	}
+	
 	
 	
 }

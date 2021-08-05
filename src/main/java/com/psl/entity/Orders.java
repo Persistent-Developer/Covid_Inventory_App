@@ -1,9 +1,15 @@
 package com.psl.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Orders {
@@ -16,6 +22,18 @@ public class Orders {
 	private String time_slot_start;
 	private String time_slot_end;
 	private String contact;
+	
+	@ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "odList")
+	List<Inventory> invList = new ArrayList<>();
+	
+	
+	public List<Inventory> getInvList() {
+		return invList;
+	}
+	public void setInvList(List<Inventory> invList) {
+		this.invList = invList;
+	}
+	
 	public int getOrder_id() {
 		return order_id;
 	}
@@ -52,26 +70,29 @@ public class Orders {
 	public void setOrder_status(String order_status) {
 		this.order_status = order_status;
 	}
-	public Orders(int order_id, String delivery_date, String time_slot_start, String time_slot_end, String contact,
-			String order_status) {
-		
+	
+	public Orders(int order_id, String order_status, String delivery_date, String time_slot_start, String time_slot_end,
+			String contact, List<Inventory> invList) {
+		super();
 		this.order_id = order_id;
+		this.order_status = order_status;
 		this.delivery_date = delivery_date;
 		this.time_slot_start = time_slot_start;
 		this.time_slot_end = time_slot_end;
 		this.contact = contact;
-		this.order_status = order_status;
+		this.invList = invList;
 	}
 	public Orders() {
 		
 		// TODO Auto-generated constructor stub
 	}
-	
 	@Override
 	public String toString() {
-		return "Order [order_id=" + order_id + ", delivery_date=" + delivery_date + ", time_slot_start="
-				+ time_slot_start + ", time_slot_end=" + time_slot_end + ", contact=" + contact + ", order_status="
-				+ order_status + "]";
+		return "Orders [order_id=" + order_id + ", order_status=" + order_status + ", delivery_date=" + delivery_date
+				+ ", time_slot_start=" + time_slot_start + ", time_slot_end=" + time_slot_end + ", contact=" + contact
+				+ ", invList=" + invList + "]";
 	}
+	
+	
 
 }
