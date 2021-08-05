@@ -37,12 +37,16 @@ public class Store {
     @JoinColumn(name ="fk4_storeid",referencedColumnName = "id")
 	private List<TimeSlots> tslist=new ArrayList<>();
 	
+	@OneToMany(targetEntity = Inventory.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="fk5_storeid",referencedColumnName = "id")
+	private List<Inventory> ilist=new ArrayList<>();
+	
 	public Store() {
 		super();
 	}
 	
 	public Store(int id, String name, String is_active, int no_of_timeslots, int slot_duration,
-			List<StoreBreaks> sblist, List<StoreHoliday> shlist, List<StoreTime> stlist, List<TimeSlots> tslist) {
+			List<StoreBreaks> sblist, List<StoreHoliday> shlist, List<StoreTime> stlist, List<TimeSlots> tslist, List<Inventory> ilist) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -53,6 +57,7 @@ public class Store {
 		this.shlist = shlist;
 		this.stlist = stlist;
 		this.tslist = tslist;
+		this.ilist = ilist;
 	}
 	
 	public List<StoreBreaks> getSblist() {
@@ -103,12 +108,29 @@ public class Store {
 	public void setSlot_duration(int slot_duration) {
 		this.slot_duration = slot_duration;
 	}
+	
+
+	public List<TimeSlots> getTslist() {
+		return tslist;
+	}
+
+	public void setTslist(List<TimeSlots> tslist) {
+		this.tslist = tslist;
+	}
+
+	public List<Inventory> getIlist() {
+		return ilist;
+	}
+
+	public void setIlist(List<Inventory> ilist) {
+		this.ilist = ilist;
+	}
 
 	@Override
 	public String toString() {
 		return "Store [id=" + id + ", name=" + name + ", is_active=" + is_active + ", no_of_timeslots="
 				+ no_of_timeslots + ", slot_duration=" + slot_duration + ", sblist=" + sblist + ", shlist=" + shlist
-				+ ", stlist=" + stlist + ", tslist=" + tslist + "]";
+				+ ", stlist=" + stlist + ", tslist=" + tslist + ", ilist=" + ilist + "]";
 	}
 	
 	
