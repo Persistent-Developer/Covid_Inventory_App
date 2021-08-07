@@ -10,7 +10,6 @@ import javax.persistence.Id;
 public class StoreHoliday {
 
 	@Id
-	@GeneratedValue
 	private int id;
 	private String holiday_name;
 	private Date date;

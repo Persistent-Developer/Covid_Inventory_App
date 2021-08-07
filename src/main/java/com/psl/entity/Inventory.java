@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -20,7 +22,6 @@ import com.sun.istack.NotNull;
 public class Inventory {
 
 	@Id
-	@GeneratedValue
 	private int product_id;
 	@NotNull
 	private String product_name;
@@ -42,7 +43,17 @@ public class Inventory {
 			)
 	private List<Orders> odList= new ArrayList<>();
 	
+	@ManyToOne(targetEntity = Inventory.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="fk5_storeid",referencedColumnName = "product_id")
+	private List<Inventory> slist;
 	
+	
+	public int getLow_stock_indicator() {
+		return low_stock_indicator;
+	}
+	public void setLow_stock_indicator(int low_stock_indicator) {
+		this.low_stock_indicator = low_stock_indicator;
+	}
 	public List<Orders> getOdList() {
 		return odList;
 	}
@@ -140,8 +151,8 @@ public class Inventory {
 	@Override
 	public String toString() {
 		return "Inventory [product_id=" + product_id + ", product_name=" + product_name + ", price=" + price
-				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category
-				+ ", loe_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
+				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category 
+				+ ", low_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
 				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
 				+ yearly_quota_per_user + ", odList=" + odList + "]";
 	}

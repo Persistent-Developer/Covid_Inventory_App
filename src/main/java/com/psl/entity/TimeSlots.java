@@ -10,7 +10,6 @@ import javax.persistence.Id;
 public class TimeSlots {
 
 	@Id
-	@GeneratedValue
 	private int id;
 	private Date slot_date;
 	private String slot_from;
