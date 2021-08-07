@@ -29,7 +29,7 @@ public class Inventory {
 	private int stock;
 	private String product_group;
 	private String category;
-	private int loe_stock_indicator;
+	private int low_stock_indicator;
 	private String in_stock;
 	private String item_type;
 	private String monthly_quota_per_user;
@@ -85,11 +85,11 @@ public class Inventory {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public int getLoe_stock_indicator() {
-		return loe_stock_indicator;
+	public int getLow_stock_indicator() {
+		return low_stock_indicator;
 	}
-	public void setLoe_stock_indicator(int loe_stock_indicator) {
-		this.loe_stock_indicator = loe_stock_indicator;
+	public void setLow_stock_indicator(int low_stock_indicator) {
+		this.low_stock_indicator = low_stock_indicator;
 	}
 	public String getIn_stock() {
 		return in_stock;
@@ -115,13 +115,13 @@ public class Inventory {
 	public void setYearly_quota_per_user(String yearly_quota_per_user) {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 	}
-	//constr need to add fk
+	
 	
 	public Inventory() {
 		super();
 	}
 	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
-			String category, int loe_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
+			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
 			String yearly_quota_per_user, List<Orders> odList) {
 		super();
 		this.product_id = product_id;
@@ -130,7 +130,7 @@ public class Inventory {
 		this.stock = stock;
 		this.product_group = product_group;
 		this.category = category;
-		this.loe_stock_indicator = loe_stock_indicator;
+		this.low_stock_indicator = low_stock_indicator;
 		this.in_stock = in_stock;
 		this.item_type = item_type;
 		this.monthly_quota_per_user = monthly_quota_per_user;
@@ -141,7 +141,7 @@ public class Inventory {
 	public String toString() {
 		return "Inventory [product_id=" + product_id + ", product_name=" + product_name + ", price=" + price
 				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category
-				+ ", loe_stock_indicator=" + loe_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
+				+ ", loe_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
 				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
 				+ yearly_quota_per_user + ", odList=" + odList + "]";
 	}
