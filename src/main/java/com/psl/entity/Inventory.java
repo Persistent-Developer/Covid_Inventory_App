@@ -47,7 +47,6 @@ public class Inventory {
     @JoinColumn(name ="fk5_storeid",referencedColumnName = "product_id")
 	private List<Inventory> slist;
 	
-	
 	public int getlow_stock_indicator() {
 		return low_stock_indicator;
 	}
