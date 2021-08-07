@@ -36,4 +36,14 @@ public class InventoryService {
 	{
 		return dao.findById(id).get();
 	}
+	
+	public void removeProducts(int id)
+	{
+		dao.deleteById(id);
+	}
+	
+	public void updateProducts(Inventory i)
+	{
+		dao.save(i);
+	}
 }

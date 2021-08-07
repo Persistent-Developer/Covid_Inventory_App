@@ -1,5 +1,6 @@
 package com.psl.dao;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.psl.entity.Inventory;

@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 public class Store {
 	
 	@Id
-	@GeneratedValue
 	private int id;
 	private String name;
 	private String is_active;
@@ -37,9 +36,7 @@ public class Store {
     @JoinColumn(name ="fk4_storeid",referencedColumnName = "id")
 	private List<TimeSlots> tslist=new ArrayList<>();
 	
-	@OneToMany(targetEntity = Inventory.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="fk5_storeid",referencedColumnName = "id")
-	private List<Inventory> ilist=new ArrayList<>();
+	
 	
 	public Store() {
 		super();
@@ -57,9 +54,8 @@ public class Store {
 		this.shlist = shlist;
 		this.stlist = stlist;
 		this.tslist = tslist;
-		this.ilist = ilist;
 	}
-	
+
 	public List<StoreBreaks> getSblist() {
 		return sblist;
 	}
@@ -118,19 +114,12 @@ public class Store {
 		this.tslist = tslist;
 	}
 
-	public List<Inventory> getIlist() {
-		return ilist;
-	}
-
-	public void setIlist(List<Inventory> ilist) {
-		this.ilist = ilist;
-	}
 
 	@Override
 	public String toString() {
 		return "Store [id=" + id + ", name=" + name + ", is_active=" + is_active + ", no_of_timeslots="
-				+ no_of_timeslots + ", slot_duration=" + slot_duration + ", sblist=" + sblist + ", shlist=" + shlist
-				+ ", stlist=" + stlist + ", tslist=" + tslist + ", ilist=" + ilist + "]";
+				+ no_of_timeslots + ", slot_duration=" + slot_duration + ", sblist=" + sblist + ", shlist=" + shlist 
+				+ ", stlist=" + stlist + ", tslist=" + tslist + "]";
 	}
 	
 	

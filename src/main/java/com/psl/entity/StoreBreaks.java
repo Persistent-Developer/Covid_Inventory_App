@@ -8,7 +8,6 @@ import javax.persistence.Id;
 public class StoreBreaks {
 
 	@Id
-	@GeneratedValue
 	private int id;
 	private String break_from;
 	private String break_to;
