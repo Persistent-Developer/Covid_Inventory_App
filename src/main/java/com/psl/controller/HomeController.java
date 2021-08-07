@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
 	@GetMapping({"/hello","/"})
-	public String sayHeloo()
+	public String Hello()
 	{
-		return "Hello from inventory!!!";
+		return "Hello ... This is Home Page !!";
 	}
 }
