@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.psl.entity.Inventory;
+import com.psl.entity.Store;
 
 public class ExcelUtils {
 
@@ -79,8 +80,11 @@ public class ExcelUtils {
 	public static List<Inventory> parseExcelFile(InputStream is) {
 		try {
     		Workbook workbook = new XSSFWorkbook(is);
+    		
      
     		Sheet sheet = workbook.getSheet("Inventory");
+    		//System.out.println("**");
+    		System.out.println("Sheet is present or not : " + sheet.getSheetName());
     		Iterator<Row> rows = sheet.iterator();
     		
     		List<Inventory> lstInventorys = new ArrayList<Inventory>();
@@ -98,33 +102,62 @@ public class ExcelUtils {
     			Iterator<Cell> cellsInRow = currentRow.iterator();
 
     			Inventory invt = new Inventory();
+    			Store st = new Store();
     			
     			int cellIndex = 0;
     			while (cellsInRow.hasNext()) {
     				Cell currentCell = cellsInRow.next();
-    				
+    			
     				if(cellIndex==0) { // ID
+    					System.out.println(currentCell.getNumericCellValue());
     					invt.setProduct_id((int) currentCell.getNumericCellValue());
     				} else if(cellIndex==1) { // Name
+    					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_name(currentCell.getStringCellValue());
     				} else if(cellIndex==2) { // Address
+    					System.out.println(currentCell.getNumericCellValue());
     					invt.setPrice((double)currentCell.getNumericCellValue());
     				} else if(cellIndex==3) { // Age
+    					System.out.println(currentCell.getNumericCellValue());
     					invt.setStock((int) currentCell.getNumericCellValue());
     				} else if(cellIndex==4) { // Name
+    					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_group(currentCell.getStringCellValue());
     				}else if(cellIndex==5) { // Name
+    					System.out.println(currentCell.getStringCellValue());
     					invt.setCategory(currentCell.getStringCellValue());
     				} else if(cellIndex==6) { // ID
+    					System.out.println(currentCell.getNumericCellValue());
     					invt.setLow_stock_indicator((int) currentCell.getNumericCellValue());
     				} else if(cellIndex==7) { // Name
+    					System.out.println(currentCell.getStringCellValue());
     					invt.setIn_stock(currentCell.getStringCellValue());
     				} else if(cellIndex==8) { // Name
+    					System.out.println(currentCell.getStringCellValue());
     					invt.setItem_type(currentCell.getStringCellValue());
     				} else if(cellIndex==9) { // Name
-    					invt.setMonthly_quota_per_user(currentCell.getStringCellValue());
+    					System.out.println(currentCell.getNumericCellValue());
+    					String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
+    					invt.setMonthly_quota_per_user(temp);
     				} else if(cellIndex==10) { // Name
-    					invt.setYearly_quota_per_user(currentCell.getStringCellValue());
+    					switch(currentCell.getCellType()) {
+    					case Cell.CELL_TYPE_NUMERIC: 
+        					System.out.println(currentCell.getNumericCellValue());
+        					String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
+        					invt.setYearly_quota_per_user(currentCell.getStringCellValue());
+        					break;
+    					case Cell.CELL_TYPE_STRING:
+    						System.out.println(currentCell.getStringCellValue());
+    						invt.setYearly_quota_per_user(currentCell.getStringCellValue());
+    						break;
+    					
+
+    					}
+    					
+    				} else if(cellIndex==11) { // Name
+    					System.out.println(currentCell.getNumericCellValue());
+    					
+    					st.setId((int)currentCell.getNumericCellValue());
     				}
     				
     				cellIndex++;
