@@ -36,6 +36,8 @@ public class Store {
     @JoinColumn(name ="fk4_storeid",referencedColumnName = "id")
 	private List<TimeSlots> tslist=new ArrayList<>();
 	
+	
+	
 	public Store() {
 		super();
 	}
@@ -52,7 +54,6 @@ public class Store {
 		this.shlist = shlist;
 		this.stlist = stlist;
 		this.tslist = tslist;
-		this.ilist = ilist;
 	}
 
 	public List<StoreBreaks> getSblist() {
@@ -113,19 +114,12 @@ public class Store {
 		this.tslist = tslist;
 	}
 
-	public List<Inventory> getIlist() {
-		return ilist;
-	}
-
-	public void setIlist(List<Inventory> ilist) {
-		this.ilist = ilist;
-	}
 
 	@Override
 	public String toString() {
 		return "Store [id=" + id + ", name=" + name + ", is_active=" + is_active + ", no_of_timeslots="
 				+ no_of_timeslots + ", slot_duration=" + slot_duration + ", sblist=" + sblist + ", shlist=" + shlist 
-				+ ", stlist=" + stlist + ", tslist=" + tslist + ", ilist=" + ilist + "]";
+				+ ", stlist=" + stlist + ", tslist=" + tslist + "]";
 	}
 	
 	
