@@ -1,10 +1,15 @@
 package com.psl.service;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.IInventoryDao;
 import com.psl.entity.Inventory;
+import com.psl.util.ExcelUtils;
 
 @Service("service")
 public class InventoryService {
@@ -15,6 +20,16 @@ public class InventoryService {
 	public void addProducts(Inventory i)
 	{
 		dao.save(i);
+	}
+	
+	public void store(MultipartFile file) {
+		try {
+			List<Inventory> lstInventorys = ExcelUtils.parseExcelFile(file.getInputStream());
+    		// Save Customers to DataBase
+    		dao.saveAll(lstInventorys);
+        } catch (IOException e) {
+        	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
 	}
 	
 	public Inventory getProducts(int id)
