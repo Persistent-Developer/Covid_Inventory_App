@@ -42,8 +42,8 @@ public class InventoryService {
 		dao.deleteById(id);
 	}
 	
-	public void updateProducts(Inventory i)
+	public List<String> findAll(int id)
 	{
-		dao.save(i);
+		return dao.findAllbyID(id);
 	}
 }

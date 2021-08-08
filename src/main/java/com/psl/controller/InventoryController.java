@@ -1,5 +1,7 @@
 package com.psl.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.ui.Model;
@@ -41,10 +43,22 @@ public class InventoryController {
         
     }
 	
+	@PutMapping("/inventory")
+	public void updateProducts(@RequestBody Inventory i)
+	{
+		service.addProducts(i);
+	}
+	
 	@GetMapping("/inventory/{product_id}")
 	public Inventory getProducts(@PathVariable int product_id)
 	{
 		return service.getProducts(product_id);
+	}
+	
+	@GetMapping("/inventory/find")
+	public List<String> findAllbyID(@RequestParam int id)
+	{
+		return service.findAll(id);
 	}
 	
 	@DeleteMapping("/inventory/{id}")
@@ -53,9 +67,5 @@ public class InventoryController {
 		service.removeProducts(id);
 	}
 	
-	@PutMapping("/inventory")
-	public void updateProducts(@RequestBody Inventory i)
-	{
-		service.updateProducts(i);
-	}
+	
 }

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
-@Entity
+@Entity(name="inventory")
 public class Inventory {
 
 	@Id
@@ -43,9 +43,9 @@ public class Inventory {
 			)
 	private List<Orders> odList= new ArrayList<>();
 	
-	@ManyToOne(targetEntity = Inventory.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="fk5_storeid",referencedColumnName = "product_id")
-	private List<Inventory> slist;
+	@ManyToOne
+    @JoinColumn(name ="fk5_storeid")
+	private Store slist;
 	
 	public int getlow_stock_indicator() {
 		return low_stock_indicator;
@@ -123,10 +123,10 @@ public class Inventory {
 	
 	//constr need to add fk
 	
-	public List<Inventory> getSlist() {
+	public Store getSlist() {
 		return slist;
 	}
-	public void setSlist(List<Inventory> slist) {
+	public void setSlist(Store slist) {
 		this.slist = slist;
 	}
 	public Inventory() {
@@ -134,7 +134,7 @@ public class Inventory {
 	}
 	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
 			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
-			String yearly_quota_per_user, List<Orders> odList) {
+			String yearly_quota_per_user, List<Orders> odList,Store slist) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
@@ -148,6 +148,7 @@ public class Inventory {
 		this.monthly_quota_per_user = monthly_quota_per_user;
 		this.yearly_quota_per_user = yearly_quota_per_user;
 		this.odList = odList;
+		this.slist = slist;
 	}
 	@Override
 	public String toString() {
@@ -155,7 +156,7 @@ public class Inventory {
 				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category 
 				+ ", low_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
 				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
-				+ yearly_quota_per_user + ", odList=" + odList + "]";
+				+ yearly_quota_per_user + ", odList=" + odList + ", slist=" + slist + "]";
 	}
 	
 	

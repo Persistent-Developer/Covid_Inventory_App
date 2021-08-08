@@ -22,19 +22,19 @@ public class Store {
 	
 	@OneToMany(targetEntity = StoreBreaks.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="fk1_storeid",referencedColumnName = "id")
-	private List<StoreBreaks> sblist=new ArrayList<>();
+	private List<StoreBreaks> sblist;
 	
 	@OneToMany(targetEntity = StoreHoliday.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="fk2_storeid",referencedColumnName = "id")
-	private List<StoreHoliday> shlist=new ArrayList<>();
+	private List<StoreHoliday> shlist;
 	
 	@OneToMany(targetEntity = StoreTime.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="fk3_storeid",referencedColumnName = "id")
-	private List<StoreTime> stlist=new ArrayList<>();
+	private List<StoreTime> stlist;
 	
 	@OneToMany(targetEntity = TimeSlots.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="fk4_storeid",referencedColumnName = "id")
-	private List<TimeSlots> tslist=new ArrayList<>();
+	private List<TimeSlots> tslist;
 	
 	
 	
