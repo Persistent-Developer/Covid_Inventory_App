@@ -160,7 +160,7 @@ public class ExcelUtils {
     					System.out.println(currentCell.getNumericCellValue());
     					Store st = new Store();
     					st.setId((int)currentCell.getNumericCellValue());
-    					invt.setStr(st);
+    					invt.setstore(st);
     				}
     				
     				cellIndex++;

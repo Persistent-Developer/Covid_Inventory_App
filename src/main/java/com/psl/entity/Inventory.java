@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.sun.istack.NotNull;
 
@@ -22,7 +24,9 @@ import com.sun.istack.NotNull;
 public class Inventory {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int product_id;
+	private long product_code;
 	@NotNull
 	private String product_name;
 	@NotNull
@@ -35,27 +39,18 @@ public class Inventory {
 	private String item_type;
 	private String monthly_quota_per_user;
 	private String yearly_quota_per_user;
-
-//	private int store_id;
-//
-//	Store str = new Store();
-//	public int getStore_id() {
-//		return str.getId();
-//	}
-//	public void setStore_id(int store_id) {
-//		str.setId(store_id);
-//	}
+	
 	@ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name="OrderDetails",
 			joinColumns = {@JoinColumn(name="fk_product_id")},
 			inverseJoinColumns = {@JoinColumn (name="fk_order_id")}
 			)
 	private List<Orders> odList= new ArrayList<>();
-
-	@ManyToOne(fetch=FetchType.LAZY)
+	
+	@ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name ="fk5_storeid")
-	private Store str;
-
+	private Store store;
+	
 	public int getlow_stock_indicator() {
 		return low_stock_indicator;
 	}
@@ -128,22 +123,26 @@ public class Inventory {
 	public void setYearly_quota_per_user(String yearly_quota_per_user) {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 	}
-
-
-	public Store getStr() {
-		return str;
+	public Store getstore() {
+		return store;
 	}
-	public void setStr(Store str) {
-		this.str = str;
+	public void setstore(Store store) {
+		this.store = store;
 	}
-
+	
+	public long getProduct_code() {
+		return product_code;
+	}
+	public void setProduct_code(long product_code) {
+		this.product_code = product_code;
+	}
 	public Inventory() {
-
+		super();
 	}
 	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
 			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
-			String yearly_quota_per_user, List<Orders> odList, Store str) {
-
+			String yearly_quota_per_user, List<Orders> odList,Store store,int product_code) {
+		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.price = price;
@@ -156,22 +155,18 @@ public class Inventory {
 		this.monthly_quota_per_user = monthly_quota_per_user;
 		this.yearly_quota_per_user = yearly_quota_per_user;
 		this.odList = odList;
-		this.str = str;
+		this.store = store;
+		this.product_code=product_code;
 	}
 	@Override
 	public String toString() {
-		return "Inventory [product_id=" + product_id + ", product_name=" + product_name + ", price=" + price
-				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category
+		return "Inventory [product_code=" + product_code + ", product_name=" + product_name + ", price=" + price
+				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category 
 				+ ", low_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
 				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
-				+ yearly_quota_per_user + ", odList=" + odList + ", str=" + str + "]";
+				+ yearly_quota_per_user + ", odList=" + odList + ", str=" + store + "]";
 	}
-
-
-
-
-
-
-
-
+	
+	
+	
 }
