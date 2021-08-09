@@ -49,10 +49,10 @@ public class InventoryController {
 		service.addProducts(i);
 	}
 	
-	@GetMapping("/inventory/{product_id}")
-	public Inventory getProducts(@PathVariable int product_id)
+	@GetMapping("/inventory/{product_code}")
+	public Inventory getProducts(@PathVariable int product_code)
 	{
-		return service.getProducts(product_id);
+		return service.getProducts(product_code);
 	}
 	
 	@GetMapping("/inventory/categories")
