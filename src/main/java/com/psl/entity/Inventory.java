@@ -26,7 +26,7 @@ public class Inventory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int product_id;
-	private long product_code;
+	private String product_code;
 	@NotNull
 	private String product_name;
 	@NotNull
@@ -130,10 +130,10 @@ public class Inventory {
 		this.store = store;
 	}
 	
-	public long getProduct_code() {
+	public String getProduct_code() {
 		return product_code;
 	}
-	public void setProduct_code(long product_code) {
+	public void setProduct_code(String product_code) {
 		this.product_code = product_code;
 	}
 	public Inventory() {
@@ -141,7 +141,7 @@ public class Inventory {
 	}
 	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
 			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
-			String yearly_quota_per_user, List<Orders> odList,Store store,int product_code) {
+			String yearly_quota_per_user, List<Orders> odList,Store store,String product_code) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;

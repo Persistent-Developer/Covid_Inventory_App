@@ -18,10 +18,12 @@ public class InventoryService {
 	@Autowired
 	private IInventoryDao dao;
 	
+	
 	public void addProducts(Inventory i)
 	{
 		dao.save(i);
 	}
+	
 	
 	public void store(MultipartFile file) {
 		try {
@@ -34,10 +36,18 @@ public class InventoryService {
         }
 	}
 	
-	public Inventory getProducts(int product_code)
+	
+	public Inventory getProducts(String code)
 	{
-		return dao.findByProduct_code(product_code);
+		return dao.findByProduct_code(code);
 	}
+	
+	
+	public Inventory getProducts(int id)
+	{
+		return dao.findById(id).get();
+	}
+	
 	
 	public void removeProducts(int id)
 	{
