@@ -1,6 +1,7 @@
 package com.psl.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,26 @@ public class InventoryService {
 		dao.deleteById(id);
 	}
 	
-	public void updateProducts(Inventory i)
+	public List<String> findAll(int id)
 	{
-		dao.save(i);
+		return dao.findAllbyID(id);
+	}
+	
+	public List<Inventory> findByCategory(String name[])
+	{
+		List<Inventory> ilist=new ArrayList<>();
+		
+		for(String nam:name)
+		{
+			List<Inventory> list=dao.findByCategory(nam);
+		
+			for(Inventory i:list)
+			{
+				ilist.add(i);
+			}
+		}
+		
+		return ilist;
+		
 	}
 }

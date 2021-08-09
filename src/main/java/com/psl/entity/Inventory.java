@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
-@Entity
+@Entity(name="inventory")
 public class Inventory {
 
 	@Id
@@ -35,9 +35,9 @@ public class Inventory {
 	private String item_type;
 	private String monthly_quota_per_user;
 	private String yearly_quota_per_user;
-	
+
 //	private int store_id;
-//	
+//
 //	Store str = new Store();
 //	public int getStore_id() {
 //		return str.getId();
@@ -51,11 +51,11 @@ public class Inventory {
 			inverseJoinColumns = {@JoinColumn (name="fk_order_id")}
 			)
 	private List<Orders> odList= new ArrayList<>();
-	
+
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name ="fk5_storeid")
 	private Store str;
-	
+
 	public int getlow_stock_indicator() {
 		return low_stock_indicator;
 	}
@@ -128,22 +128,22 @@ public class Inventory {
 	public void setYearly_quota_per_user(String yearly_quota_per_user) {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 	}
-	
-	
+
+
 	public Store getStr() {
 		return str;
 	}
 	public void setStr(Store str) {
 		this.str = str;
 	}
-	
+
 	public Inventory() {
-		
+
 	}
 	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
 			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
 			String yearly_quota_per_user, List<Orders> odList, Store str) {
-		
+
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.price = price;
@@ -166,12 +166,12 @@ public class Inventory {
 				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
 				+ yearly_quota_per_user + ", odList=" + odList + ", str=" + str + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 }
