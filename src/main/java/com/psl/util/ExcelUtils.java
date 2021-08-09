@@ -91,6 +91,7 @@ public class ExcelUtils {
     		
     		int rowNumber = 0;
     		while (rows.hasNext()) {
+    			System.out.println("**");
     			Row currentRow = rows.next();
     			
     			// skip header
@@ -108,43 +109,44 @@ public class ExcelUtils {
     			while (cellsInRow.hasNext()) {
     				Cell currentCell = cellsInRow.next();
     			
-    				if(cellIndex==0) { // ID
+    				if(cellIndex==0) { 
     					System.out.println(currentCell.getNumericCellValue());
+    		
     					invt.setProduct_id((int) currentCell.getNumericCellValue());
-    				} else if(cellIndex==1) { // Name
+    				} else if(cellIndex==1) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_name(currentCell.getStringCellValue());
-    				} else if(cellIndex==2) { // Address
+    				} else if(cellIndex==2) { 
     					System.out.println(currentCell.getNumericCellValue());
     					invt.setPrice((double)currentCell.getNumericCellValue());
-    				} else if(cellIndex==3) { // Age
+    				} else if(cellIndex==3) { 
     					System.out.println(currentCell.getNumericCellValue());
     					invt.setStock((int) currentCell.getNumericCellValue());
-    				} else if(cellIndex==4) { // Name
+    				} else if(cellIndex==4) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_group(currentCell.getStringCellValue());
-    				}else if(cellIndex==5) { // Name
+    				}else if(cellIndex==5) {
     					System.out.println(currentCell.getStringCellValue());
     					invt.setCategory(currentCell.getStringCellValue());
-    				} else if(cellIndex==6) { // ID
+    				} else if(cellIndex==6) { 
     					System.out.println(currentCell.getNumericCellValue());
     					invt.setlow_stock_indicator((int) currentCell.getNumericCellValue());
-    				} else if(cellIndex==7) { // Name
+    				} else if(cellIndex==7) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setIn_stock(currentCell.getStringCellValue());
-    				} else if(cellIndex==8) { // Name
+    				} else if(cellIndex==8) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setItem_type(currentCell.getStringCellValue());
-    				} else if(cellIndex==9) { // Name
+    				} else if(cellIndex==9) { 
     					System.out.println(currentCell.getNumericCellValue());
     					String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
     					invt.setMonthly_quota_per_user(temp);
-    				} else if(cellIndex==10) { // Name
+    				} else if(cellIndex==10) { 
     					switch(currentCell.getCellType()) {
     					case Cell.CELL_TYPE_NUMERIC: 
         					System.out.println(currentCell.getNumericCellValue());
-        					String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
-        					invt.setYearly_quota_per_user(currentCell.getStringCellValue());
+        					//String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
+        					invt.setYearly_quota_per_user(Integer.toString((int) currentCell.getNumericCellValue()));
         					break;
     					case Cell.CELL_TYPE_STRING:
     						System.out.println(currentCell.getStringCellValue());
@@ -167,6 +169,9 @@ public class ExcelUtils {
     			lstInventorys.add(invt);
     		}
     		
+//    		for(Inventory inv : lstInventorys) {
+//    			System.out.println(inv.getProduct_id());
+//    		}
     		// Close WorkBook
     		workbook.close();
     		
