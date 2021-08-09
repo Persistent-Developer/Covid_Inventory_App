@@ -26,7 +26,7 @@ public class Inventory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int product_id;
-	private long product_code;
+	private String product_code;
 	@NotNull
 	private String product_name;
 	@NotNull
@@ -130,20 +130,22 @@ public class Inventory {
 		this.store = store;
 	}
 	
-	public long getProduct_code() {
+	
+	public String getProduct_code() {
 		return product_code;
 	}
-	public void setProduct_code(long product_code) {
+	public void setProduct_code(String product_code) {
 		this.product_code = product_code;
 	}
 	public Inventory() {
 		super();
 	}
-	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
-			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
-			String yearly_quota_per_user, List<Orders> odList,Store store,int product_code) {
+	public Inventory(int product_id, String product_code, String product_name, double price, int stock,
+			String product_group, String category, int low_stock_indicator, String in_stock, String item_type,
+			String monthly_quota_per_user, String yearly_quota_per_user, List<Orders> odList, Store store) {
 		super();
 		this.product_id = product_id;
+		this.product_code = product_code;
 		this.product_name = product_name;
 		this.price = price;
 		this.stock = stock;
@@ -156,16 +158,18 @@ public class Inventory {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 		this.odList = odList;
 		this.store = store;
-		this.product_code=product_code;
 	}
 	@Override
 	public String toString() {
-		return "Inventory [product_code=" + product_code + ", product_name=" + product_name + ", price=" + price
-				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category 
-				+ ", low_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
-				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
-				+ yearly_quota_per_user + ", odList=" + odList + ", str=" + store + "]";
+		return "Inventory [product_id=" + product_id + ", product_code=" + product_code + ", product_name="
+				+ product_name + ", price=" + price + ", stock=" + stock + ", product_group=" + product_group
+				+ ", category=" + category + ", low_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock
+				+ ", item_type=" + item_type + ", monthly_quota_per_user=" + monthly_quota_per_user
+				+ ", yearly_quota_per_user=" + yearly_quota_per_user + ", odList=" + odList + ", store=" + store + "]";
 	}
+	
+	
+	
 	
 	
 	

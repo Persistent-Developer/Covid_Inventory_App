@@ -24,5 +24,5 @@ public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 	List<Inventory> findByCategory(String name);
 	
 	@Query(value="select * from inventory where product_code=?1",nativeQuery = true)
-	Inventory findByProduct_code(int product_code);
+	Inventory findByProduct_code(String product_code);
 }

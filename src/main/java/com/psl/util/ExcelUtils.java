@@ -113,35 +113,38 @@ public class ExcelUtils {
     					System.out.println(currentCell.getNumericCellValue());
     		
     					invt.setProduct_id((int) currentCell.getNumericCellValue());
-    				} else if(cellIndex==1) { 
+    				}  else if(cellIndex==1) { 
+    					System.out.println(currentCell.getStringCellValue());
+    					invt.setProduct_code(currentCell.getStringCellValue());
+    				} else if(cellIndex==2) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_name(currentCell.getStringCellValue());
-    				} else if(cellIndex==2) { 
-    					System.out.println(currentCell.getNumericCellValue());
-    					invt.setPrice((double)currentCell.getNumericCellValue());
     				} else if(cellIndex==3) { 
     					System.out.println(currentCell.getNumericCellValue());
-    					invt.setStock((int) currentCell.getNumericCellValue());
+    					invt.setPrice((double)currentCell.getNumericCellValue());
     				} else if(cellIndex==4) { 
+    					System.out.println(currentCell.getNumericCellValue());
+    					invt.setStock((int) currentCell.getNumericCellValue());
+    				} else if(cellIndex==5) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_group(currentCell.getStringCellValue());
-    				}else if(cellIndex==5) {
+    				}else if(cellIndex==6) {
     					System.out.println(currentCell.getStringCellValue());
     					invt.setCategory(currentCell.getStringCellValue());
-    				} else if(cellIndex==6) { 
+    				} else if(cellIndex==7) { 
     					System.out.println(currentCell.getNumericCellValue());
     					invt.setlow_stock_indicator((int) currentCell.getNumericCellValue());
-    				} else if(cellIndex==7) { 
-    					System.out.println(currentCell.getStringCellValue());
-    					invt.setIn_stock(currentCell.getStringCellValue());
     				} else if(cellIndex==8) { 
     					System.out.println(currentCell.getStringCellValue());
-    					invt.setItem_type(currentCell.getStringCellValue());
+    					invt.setIn_stock(currentCell.getStringCellValue());
     				} else if(cellIndex==9) { 
+    					System.out.println(currentCell.getStringCellValue());
+    					invt.setItem_type(currentCell.getStringCellValue());
+    				} else if(cellIndex==10) { 
     					System.out.println(currentCell.getNumericCellValue());
     					String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
     					invt.setMonthly_quota_per_user(temp);
-    				} else if(cellIndex==10) { 
+    				} else if(cellIndex==11) { 
     					switch(currentCell.getCellType()) {
     					case Cell.CELL_TYPE_NUMERIC: 
         					System.out.println(currentCell.getNumericCellValue());
@@ -156,7 +159,7 @@ public class ExcelUtils {
 
     					}
     					
-    				} else if(cellIndex==11) { // Name
+    				} else if(cellIndex==12) { // Name
     					System.out.println(currentCell.getNumericCellValue());
     					Store st = new Store();
     					st.setId((int)currentCell.getNumericCellValue());

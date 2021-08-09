@@ -34,7 +34,7 @@ public class InventoryService {
         }
 	}
 	
-	public Inventory getProducts(int product_code)
+	public Inventory getProducts(String product_code)
 	{
 		return dao.findByProduct_code(product_code);
 	}
