@@ -36,6 +36,7 @@ public class InventoryService {
         }
 	}
 	
+
 	
 	public Inventory getProducts(String code)
 	{

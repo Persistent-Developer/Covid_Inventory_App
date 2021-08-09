@@ -48,7 +48,7 @@ public class InventoryController {
 	{
 		service.addProducts(i);
 	}
-	
+
 	@GetMapping("/inventory/{id}")
 	public Inventory getProducts(@PathVariable int id)
 	{
