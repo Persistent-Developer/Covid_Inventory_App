@@ -55,10 +55,16 @@ public class InventoryController {
 		return service.getProducts(product_id);
 	}
 	
-	@GetMapping("/inventory/find")
+	@GetMapping("/inventory/categories")
 	public List<String> findAllbyID(@RequestParam int id)
 	{
 		return service.findAll(id);
+	}
+	
+	@GetMapping("/inventory/category")
+	public List<Inventory> findAllbyproductid(@RequestParam String name[])
+	{
+		return service.findByCategory(name);
 	}
 	
 	@DeleteMapping("/inventory/{id}")

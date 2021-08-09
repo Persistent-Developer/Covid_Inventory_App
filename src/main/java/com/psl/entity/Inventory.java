@@ -43,7 +43,7 @@ public class Inventory {
 			)
 	private List<Orders> odList= new ArrayList<>();
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = Store.class)
     @JoinColumn(name ="fk5_storeid")
 	private Store slist;
 	
@@ -119,10 +119,6 @@ public class Inventory {
 	public void setYearly_quota_per_user(String yearly_quota_per_user) {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 	}
-	
-	
-	//constr need to add fk
-	
 	public Store getSlist() {
 		return slist;
 	}
