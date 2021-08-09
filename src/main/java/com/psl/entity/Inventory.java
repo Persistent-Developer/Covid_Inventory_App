@@ -36,6 +36,15 @@ public class Inventory {
 	private String monthly_quota_per_user;
 	private String yearly_quota_per_user;
 	
+//	private int store_id;
+//	
+//	Store str = new Store();
+//	public int getStore_id() {
+//		return str.getId();
+//	}
+//	public void setStore_id(int store_id) {
+//		str.setId(store_id);
+//	}
 	@ManyToMany(fetch= FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name="OrderDetails",
 			joinColumns = {@JoinColumn(name="fk_product_id")},
@@ -43,9 +52,9 @@ public class Inventory {
 			)
 	private List<Orders> odList= new ArrayList<>();
 	
-	@ManyToOne(targetEntity = Inventory.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="fk5_storeid",referencedColumnName = "product_id")
-	private List<Inventory> slist;
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name ="fk5_storeid")
+	private Store str;
 	
 	public int getlow_stock_indicator() {
 		return low_stock_indicator;
@@ -121,21 +130,20 @@ public class Inventory {
 	}
 	
 	
-	//constr need to add fk
+	public Store getStr() {
+		return str;
+	}
+	public void setStr(Store str) {
+		this.str = str;
+	}
 	
-	public List<Inventory> getSlist() {
-		return slist;
-	}
-	public void setSlist(List<Inventory> slist) {
-		this.slist = slist;
-	}
 	public Inventory() {
-		super();
+		
 	}
 	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
 			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
-			String yearly_quota_per_user, List<Orders> odList) {
-		super();
+			String yearly_quota_per_user, List<Orders> odList, Store str) {
+		
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.price = price;
@@ -148,15 +156,21 @@ public class Inventory {
 		this.monthly_quota_per_user = monthly_quota_per_user;
 		this.yearly_quota_per_user = yearly_quota_per_user;
 		this.odList = odList;
+		this.str = str;
 	}
 	@Override
 	public String toString() {
 		return "Inventory [product_id=" + product_id + ", product_name=" + product_name + ", price=" + price
-				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category 
+				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category
 				+ ", low_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
 				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
-				+ yearly_quota_per_user + ", odList=" + odList + "]";
+				+ yearly_quota_per_user + ", odList=" + odList + ", str=" + str + "]";
 	}
+	
+	
+	
+	
+	
 	
 	
 	

@@ -64,7 +64,7 @@ public class ExcelUtils {
 				row.createCell(2).setCellValue(inventory.getStock());
 				row.createCell(2).setCellValue(inventory.getProduct_group());
 				row.createCell(2).setCellValue(inventory.getCategory());
-				row.createCell(2).setCellValue(inventory.getLow_stock_indicator());
+				row.createCell(2).setCellValue(inventory.getlow_stock_indicator());
 				row.createCell(2).setCellValue(inventory.getIn_stock());
 				row.createCell(2).setCellValue(inventory.getItem_type());
 				row.createCell(2).setCellValue(inventory.getMonthly_quota_per_user());
@@ -102,7 +102,7 @@ public class ExcelUtils {
     			Iterator<Cell> cellsInRow = currentRow.iterator();
 
     			Inventory invt = new Inventory();
-    			Store st = new Store();
+    			//Store st = new Store();
     			
     			int cellIndex = 0;
     			while (cellsInRow.hasNext()) {
@@ -128,7 +128,7 @@ public class ExcelUtils {
     					invt.setCategory(currentCell.getStringCellValue());
     				} else if(cellIndex==6) { // ID
     					System.out.println(currentCell.getNumericCellValue());
-    					invt.setLow_stock_indicator((int) currentCell.getNumericCellValue());
+    					invt.setlow_stock_indicator((int) currentCell.getNumericCellValue());
     				} else if(cellIndex==7) { // Name
     					System.out.println(currentCell.getStringCellValue());
     					invt.setIn_stock(currentCell.getStringCellValue());
@@ -156,8 +156,9 @@ public class ExcelUtils {
     					
     				} else if(cellIndex==11) { // Name
     					System.out.println(currentCell.getNumericCellValue());
-    					
+    					Store st = new Store();
     					st.setId((int)currentCell.getNumericCellValue());
+    					invt.setStr(st);
     				}
     				
     				cellIndex++;

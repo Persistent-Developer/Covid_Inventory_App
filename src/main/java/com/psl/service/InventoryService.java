@@ -25,6 +25,7 @@ public class InventoryService {
 	public void store(MultipartFile file) {
 		try {
 			List<Inventory> lstInventorys = ExcelUtils.parseExcelFile(file.getInputStream());
+			//System.out.println(lstInventorys);
     		// Save Customers to DataBase
     		dao.saveAll(lstInventorys);
         } catch (IOException e) {
