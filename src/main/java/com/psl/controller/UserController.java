@@ -67,6 +67,20 @@ public class UserController {
 //	  }
 
 //---------------------------------------------------------------------------	
+	
+	@PostMapping("/user/uploadFile")
+    public String uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file) {
+		try {
+			service.store(file);
+			System.out.println("fas");
+			
+		} catch (Exception e) {
+			
+		}
+		
+		return "file updated succesfully ";
+		
+	}
 
 }
 

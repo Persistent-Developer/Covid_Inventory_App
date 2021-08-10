@@ -3,6 +3,8 @@ package com.psl.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,10 +12,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class User {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
 	
 	private String userName;
-	private long phNumber;
+	private String phNumber;
 	private String password;
 	private String email;
 	private String status;
@@ -21,8 +24,8 @@ public class User {
 	private int purchaseLimitPerYear;
 	private int purchaseLimitPerMonth;
 	
-	@ManyToOne(targetEntity = Role.class,cascade = CascadeType.ALL)
-	@JoinColumn(name="roleId", referencedColumnName = "roleId")
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="role_id")
 	private Role role;
 	
 	public User() {
@@ -37,9 +40,11 @@ public class User {
 		this.role = role;
 	}
 
-	public User(int userId, String userName, long phNumber, String password, String email, String status,
-			String category, int purchaseLimitPerYear, int purchaseLimitPerMonth) {
-		super();
+	
+	
+	public User(int userId, String userName, String phNumber, String password, String email, String status,
+			String category, int purchaseLimitPerYear, int purchaseLimitPerMonth, Role role) {
+		
 		this.userId = userId;
 		this.userName = userName;
 		this.phNumber = phNumber;
@@ -49,9 +54,9 @@ public class User {
 		this.category = category;
 		this.purchaseLimitPerYear = purchaseLimitPerYear;
 		this.purchaseLimitPerMonth = purchaseLimitPerMonth;
+		this.role = role;
 	}
-	
-	
+
 	public int getUserId() {
 		return userId;
 	}
@@ -75,18 +80,13 @@ public class User {
 	}
 
 
-
-	public long getPhNumber() {
+	public String getPhNumber() {
 		return phNumber;
 	}
 
-
-
-	public void setPhNumber(long phNumber) {
+	public void setPhNumber(String phNumber) {
 		this.phNumber = phNumber;
 	}
-
-
 
 	public String getPassword() {
 		return password;
@@ -164,5 +164,6 @@ public class User {
 				+ ", email=" + email + ", status=" + status + ", category=" + category + ", purchaseLimitPerYear="
 				+ purchaseLimitPerYear + ", purchaseLimitPerMonth=" + purchaseLimitPerMonth + ", role=" + role + "]";
 	}
+
 	
 }

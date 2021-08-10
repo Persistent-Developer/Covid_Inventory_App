@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.psl.entity.Inventory;
+import com.sun.istack.NotNull;
 
 public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 	
@@ -25,4 +26,6 @@ public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 	
 	@Query(value="select * from inventory where product_code=?1",nativeQuery = true)
 	Inventory findByProduct_code(String product_code);
+	
+
 }

@@ -31,12 +31,12 @@ public class InventoryController {
 	}
 	
 	@PostMapping("/inventory/uploadFile")
-    public String uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file/*, Model model*/) {
+    public String uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file) {
 		try {
 			service.store(file);
-			//model.addAttribute("message", "File uploaded successfully!");
+			
 		} catch (Exception e) {
-			//model.addAttribute("message", "Fail! -> uploaded filename: " + file.getOriginalFilename());
+			
 		}
 		
 		return "file updated succesfully ";

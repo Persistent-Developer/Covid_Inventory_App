@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.IUserDAO;
+import com.psl.entity.Inventory;
 import com.psl.entity.Role;
 import com.psl.entity.User;
+import com.psl.util.ExcelUtils;
 
 
 @Service("UserService")
@@ -41,18 +43,17 @@ public class UserService {
 		return dao.findById(id).get();
 	}
 	
-//    public void save(MultipartFile file)
-//    {
-//	   
-//      try {
-//	      List<User> users = userExcel.excelToUsers(file.getInputStream());
-//	      System.out.println("----------returning from userExcel -----");
-//	      System.out.println(users);
-//	      dao.saveAll(users);
-//	    
-//	    } catch (IOException e) {
-//	      throw new RuntimeException("fail to store excel data: " + e.getMessage());
-//	    }
-//	  }
+	public void store(MultipartFile file) {
+		try {
+			
+			List<User> lstUsers = ExcelUtils.parseUserExcelFile(file.getInputStream());
+			
+    		dao.saveAll(lstUsers);
+        } catch (IOException e) {
+        	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
+	}
+	
+
 
 }
