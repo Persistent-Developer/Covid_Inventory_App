@@ -1,7 +1,11 @@
 package com.psl.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class User {
@@ -17,13 +21,21 @@ public class User {
 	private int purchaseLimitPerYear;
 	private int purchaseLimitPerMonth;
 	
-	
+	@ManyToOne(targetEntity = Role.class,cascade = CascadeType.ALL)
+	@JoinColumn(name="roleId", referencedColumnName = "roleId")
+	private Role role;
 	
 	public User() {
 		super();
 	}
 
+	public Role getRole() {
+		return role;
+	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	public User(int userId, String userName, long phNumber, String password, String email, String status,
 			String category, int purchaseLimitPerYear, int purchaseLimitPerMonth) {
@@ -146,13 +158,11 @@ public class User {
 		this.purchaseLimitPerMonth = purchaseLimitPerMonth;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", phNumber=" + phNumber + ", password=" + password
 				+ ", email=" + email + ", status=" + status + ", category=" + category + ", purchaseLimitPerYear="
-				+ purchaseLimitPerYear + ", purchaseLimitPerMonth=" + purchaseLimitPerMonth + "]";
+				+ purchaseLimitPerYear + ", purchaseLimitPerMonth=" + purchaseLimitPerMonth + ", role=" + role + "]";
 	}
-
+	
 }
