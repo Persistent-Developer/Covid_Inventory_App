@@ -146,12 +146,12 @@ public class ExcelUtils {
     					invt.setMonthly_quota_per_user(temp);
     				} else if(cellIndex==11) { 
     					switch(currentCell.getCellType()) {
-    					case Cell.CELL_TYPE_NUMERIC: 
+    					case NUMERIC: 
         					System.out.println(currentCell.getNumericCellValue());
         					//String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
         					invt.setYearly_quota_per_user(Integer.toString((int) currentCell.getNumericCellValue()));
         					break;
-    					case Cell.CELL_TYPE_STRING:
+    					case STRING:
     						System.out.println(currentCell.getStringCellValue());
     						invt.setYearly_quota_per_user(currentCell.getStringCellValue());
     						break;

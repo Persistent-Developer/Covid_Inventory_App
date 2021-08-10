@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.psl.entity.User;
 
-public interface UserDAO extends CrudRepository<User, Integer> {
+public interface IUserDAO extends CrudRepository<User, Integer> {
 
 }
