@@ -8,7 +8,6 @@ import javax.persistence.Id;
 public class StoreTime {
 
 	@Id
-	@GeneratedValue
 	private int id;
 	private String day;
 	private String start_time;
@@ -54,3 +53,6 @@ public class StoreTime {
 	
 	
 }
+
+
+

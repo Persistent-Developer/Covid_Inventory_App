@@ -8,20 +8,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.sun.istack.NotNull;
 
-@Entity
+@Entity(name="inventory")
 public class Inventory {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int product_id;
+	private String product_code;
 	@NotNull
 	private String product_name;
 	@NotNull
@@ -29,7 +34,7 @@ public class Inventory {
 	private int stock;
 	private String product_group;
 	private String category;
-	private int loe_stock_indicator;
+	private int low_stock_indicator;
 	private String in_stock;
 	private String item_type;
 	private String monthly_quota_per_user;
@@ -42,7 +47,16 @@ public class Inventory {
 			)
 	private List<Orders> odList= new ArrayList<>();
 	
+	@ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name ="fk5_storeid")
+	private Store store;
 	
+	public int getlow_stock_indicator() {
+		return low_stock_indicator;
+	}
+	public void setlow_stock_indicator(int low_stock_indicator) {
+		this.low_stock_indicator = low_stock_indicator;
+	}
 	public List<Orders> getOdList() {
 		return odList;
 	}
@@ -85,12 +99,6 @@ public class Inventory {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public int getLoe_stock_indicator() {
-		return loe_stock_indicator;
-	}
-	public void setLoe_stock_indicator(int loe_stock_indicator) {
-		this.loe_stock_indicator = loe_stock_indicator;
-	}
 	public String getIn_stock() {
 		return in_stock;
 	}
@@ -115,36 +123,53 @@ public class Inventory {
 	public void setYearly_quota_per_user(String yearly_quota_per_user) {
 		this.yearly_quota_per_user = yearly_quota_per_user;
 	}
-	//constr need to add fk
+	public Store getstore() {
+		return store;
+	}
+	public void setstore(Store store) {
+		this.store = store;
+	}
 	
+	
+	public String getProduct_code() {
+		return product_code;
+	}
+	public void setProduct_code(String product_code) {
+		this.product_code = product_code;
+	}
 	public Inventory() {
 		super();
 	}
-	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
-			String category, int loe_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
-			String yearly_quota_per_user, List<Orders> odList) {
+	public Inventory(int product_id, String product_code, String product_name, double price, int stock,
+			String product_group, String category, int low_stock_indicator, String in_stock, String item_type,
+			String monthly_quota_per_user, String yearly_quota_per_user, List<Orders> odList, Store store) {
 		super();
 		this.product_id = product_id;
+		this.product_code = product_code;
 		this.product_name = product_name;
 		this.price = price;
 		this.stock = stock;
 		this.product_group = product_group;
 		this.category = category;
-		this.loe_stock_indicator = loe_stock_indicator;
+		this.low_stock_indicator = low_stock_indicator;
 		this.in_stock = in_stock;
 		this.item_type = item_type;
 		this.monthly_quota_per_user = monthly_quota_per_user;
 		this.yearly_quota_per_user = yearly_quota_per_user;
 		this.odList = odList;
+		this.store = store;
 	}
 	@Override
 	public String toString() {
-		return "Inventory [product_id=" + product_id + ", product_name=" + product_name + ", price=" + price
-				+ ", stock=" + stock + ", product_group=" + product_group + ", category=" + category
-				+ ", loe_stock_indicator=" + loe_stock_indicator + ", in_stock=" + in_stock + ", item_type=" + item_type
-				+ ", monthly_quota_per_user=" + monthly_quota_per_user + ", yearly_quota_per_user="
-				+ yearly_quota_per_user + ", odList=" + odList + "]";
+		return "Inventory [product_id=" + product_id + ", product_code=" + product_code + ", product_name="
+				+ product_name + ", price=" + price + ", stock=" + stock + ", product_group=" + product_group
+				+ ", category=" + category + ", low_stock_indicator=" + low_stock_indicator + ", in_stock=" + in_stock
+				+ ", item_type=" + item_type + ", monthly_quota_per_user=" + monthly_quota_per_user
+				+ ", yearly_quota_per_user=" + yearly_quota_per_user + ", odList=" + odList + ", store=" + store + "]";
 	}
+	
+	
+	
 	
 	
 	
