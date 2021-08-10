@@ -16,10 +16,13 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.SystemOutLogger;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.psl.entity.Inventory;
+import com.psl.entity.Role;
 import com.psl.entity.Store;
+import com.psl.entity.User;
 
 public class ExcelUtils {
 
@@ -77,7 +80,7 @@ public class ExcelUtils {
 		}
 	}
 	
-	public static List<Inventory> parseExcelFile(InputStream is) {
+	public static List<Inventory> parseInventoryExcelFile(InputStream is) {
 		try {
     		Workbook workbook = new XSSFWorkbook(is);
     		
@@ -110,48 +113,45 @@ public class ExcelUtils {
     				Cell currentCell = cellsInRow.next();
     			
     				if(cellIndex==0) { 
-    					System.out.println(currentCell.getNumericCellValue());
-    		
-    					invt.setProduct_id((int) currentCell.getNumericCellValue());
-    				}  else if(cellIndex==1) { 
+    					//System.out.println("***");
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_code(currentCell.getStringCellValue());
-    				} else if(cellIndex==2) { 
+    				} else if(cellIndex==1) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_name(currentCell.getStringCellValue());
-    				} else if(cellIndex==3) { 
+    				} else if(cellIndex==2) { 
     					System.out.println(currentCell.getNumericCellValue());
     					invt.setPrice((double)currentCell.getNumericCellValue());
-    				} else if(cellIndex==4) { 
+    				} else if(cellIndex==3) { 
     					System.out.println(currentCell.getNumericCellValue());
     					invt.setStock((int) currentCell.getNumericCellValue());
-    				} else if(cellIndex==5) { 
+    				} else if(cellIndex==4) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_group(currentCell.getStringCellValue());
-    				}else if(cellIndex==6) {
+    				}else if(cellIndex==5) {
     					System.out.println(currentCell.getStringCellValue());
     					invt.setCategory(currentCell.getStringCellValue());
-    				} else if(cellIndex==7) { 
+    				} else if(cellIndex==6) { 
     					System.out.println(currentCell.getNumericCellValue());
     					invt.setlow_stock_indicator((int) currentCell.getNumericCellValue());
-    				} else if(cellIndex==8) { 
+    				} else if(cellIndex==7) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setIn_stock(currentCell.getStringCellValue());
-    				} else if(cellIndex==9) { 
+    				} else if(cellIndex==8) { 
     					System.out.println(currentCell.getStringCellValue());
     					invt.setItem_type(currentCell.getStringCellValue());
-    				} else if(cellIndex==10) { 
+    				} else if(cellIndex==9) { 
     					System.out.println(currentCell.getNumericCellValue());
     					String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
     					invt.setMonthly_quota_per_user(temp);
-    				} else if(cellIndex==11) { 
+    				} else if(cellIndex==10) { 
     					switch(currentCell.getCellType()) {
-    					case Cell.CELL_TYPE_NUMERIC: 
+    					case NUMERIC: 
         					System.out.println(currentCell.getNumericCellValue());
         					//String temp = (Integer.valueOf((int) currentCell.getNumericCellValue())).toString();
         					invt.setYearly_quota_per_user(Integer.toString((int) currentCell.getNumericCellValue()));
         					break;
-    					case Cell.CELL_TYPE_STRING:
+    					case STRING:
     						System.out.println(currentCell.getStringCellValue());
     						invt.setYearly_quota_per_user(currentCell.getStringCellValue());
     						break;
@@ -159,7 +159,7 @@ public class ExcelUtils {
 
     					}
     					
-    				} else if(cellIndex==12) { // Name
+    				} else if(cellIndex==11) { // Name
     					System.out.println(currentCell.getNumericCellValue());
     					Store st = new Store();
     					st.setId((int)currentCell.getNumericCellValue());
@@ -179,6 +179,88 @@ public class ExcelUtils {
     		workbook.close();
     		
     		return lstInventorys;
+        } catch (IOException e) {
+        	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
+	}
+	
+	public static List<User> parseUserExcelFile(InputStream is) {
+		try {
+    		Workbook workbook = new XSSFWorkbook(is);
+    		
+    			
+    		Sheet sheet = workbook.getSheet("Sheet1");
+    		//System.out.println("**");
+    		System.out.println("Sheet is present or not : " + sheet.getSheetName());
+    		Iterator<Row> rows = sheet.iterator();
+    		
+    		List<User> lstUsers = new ArrayList<User>();
+    		
+    		int rowNumber = 0;
+    		while (rows.hasNext()) {
+    			System.out.println("**");
+    			Row currentRow = rows.next();
+    			
+    			// skip header
+    			if(rowNumber == 0) {
+    				rowNumber++;
+    				continue;
+    			}
+    			
+    			Iterator<Cell> cellsInRow = currentRow.iterator();
+
+    			User usr = new User();
+    			//Store st = new Store();
+    			
+    			int cellIndex = 0;
+    			while (cellsInRow.hasNext()) {
+    				Cell currentCell = cellsInRow.next();
+    			
+    				if(cellIndex==0) { 
+    					//System.out.println("***");
+    					System.out.println(currentCell.getStringCellValue());
+    					usr.setPhNumber(currentCell.getStringCellValue());
+    				} else if(cellIndex==1) { 
+    					System.out.println(currentCell.getStringCellValue());
+    					usr.setUserName(currentCell.getStringCellValue());
+    				} else if(cellIndex==2) { 
+    					System.out.println(currentCell.getNumericCellValue());
+    					Role role = new Role();
+    					role.setRoleId((int)currentCell.getNumericCellValue());
+    					usr.setRole(role);
+    				} else if(cellIndex==3) { 
+    					System.out.println(currentCell.getStringCellValue());
+    					usr.setStatus(currentCell.getStringCellValue());
+    				} else if(cellIndex==4) { 
+    					System.out.println(currentCell.getStringCellValue());
+    					usr.setCategory(currentCell.getStringCellValue());
+    				}else if(cellIndex==5) {
+    					System.out.println(currentCell.getNumericCellValue());
+    					usr.setPurchaseLimitPerYear((int)currentCell.getNumericCellValue());
+    				} else if(cellIndex==6) { 
+    					System.out.println(currentCell.getNumericCellValue());
+    					usr.setPurchaseLimitPerMonth((int) currentCell.getNumericCellValue());
+    				} else if(cellIndex==7) { 
+    					System.out.println(currentCell.getStringCellValue());
+    					usr.setEmail(currentCell.getStringCellValue());
+    				} else if(cellIndex==8) { 
+    					System.out.println(currentCell.getStringCellValue());
+    					usr.setPassword(currentCell.getStringCellValue());
+    				}
+    				
+    				cellIndex++;
+    			}
+    			
+    			lstUsers.add(usr);
+    		}
+    		
+//    		for(Inventory inv : lstInventorys) {
+//    			System.out.println(inv.getProduct_id());
+//    		}
+    		// Close WorkBook
+    		workbook.close();
+    		
+    		return lstUsers;
         } catch (IOException e) {
         	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
         }

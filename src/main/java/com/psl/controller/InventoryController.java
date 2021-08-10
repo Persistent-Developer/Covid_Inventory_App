@@ -47,6 +47,7 @@ public class InventoryController {
 	
 	//post productts using excel file
 	@PostMapping("/inventory/uploadFile")
+
     public ResponseEntity<String> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file/*, Model model*/) {
 		try {
 			service.store(file);
@@ -57,6 +58,7 @@ public class InventoryController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 			//model.addAttribute("message", "Fail! -> uploaded filename: " + file.getOriginalFilename());
 		}    
+
     }
 	
 	

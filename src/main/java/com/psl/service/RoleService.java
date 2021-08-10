@@ -3,14 +3,14 @@ package com.psl.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.psl.dao.RoleDAO;
+import com.psl.dao.IRoleDAO;
 import com.psl.entity.Role;
 
 @Service("roleService")
 public class RoleService {
 
 	@Autowired
-	private RoleDAO dao;
+	private IRoleDAO dao;
 	
 	public void addRole(Role role)
 	{

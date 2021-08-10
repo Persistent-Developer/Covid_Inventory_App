@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.psl.dao.IStoreDao;
-import com.psl.entity.Inventory;
 import com.psl.entity.Store;
 
 @Service

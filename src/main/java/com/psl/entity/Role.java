@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-
 
 @Entity
 public class Role {
@@ -16,23 +16,19 @@ public class Role {
 	private int roleId;
 	private String roleName;
 
-	@OneToMany(targetEntity = User.class,cascade = CascadeType.ALL)
-	@JoinColumn(name="roleID", referencedColumnName = "roleId")
-	private List<User> users;
-	
-
-	
-	public Role(int roleId, String roleName, List<User> users) {
-		super();
-		this.roleId = roleId;
-		this.roleName = roleName;
-		this.users = users;
-	}
-
 	public Role() {
 		super();
 	}
 	
+//	@OneToMany(mappedBy="role")  
+//	private List<User> users; 
+	
+	public Role(int roleid, String roleName) {
+	super();
+	this.roleId = roleid;
+	this.roleName = roleName;
+}
+
 	public int getRoleId() {
 		return roleId;
 	}
@@ -53,28 +49,20 @@ public class Role {
 	}
 
 
-	public List<User> getUsers() {
-		return users;
-	}
-
-
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
+//	public List<User> getUsers() {
+//		return users;
+//	}
+//
+//
+//	public void setUsers(List<User> users) {
+//		this.users = users;
+//	}
 
 
 	@Override
 	public String toString() {
-		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", users=" + users + "]";
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + "]";//", users=" + users + "]";
 	}
 	
 
 }
-
-
-
-
-
-
-
-
