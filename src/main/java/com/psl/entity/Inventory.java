@@ -18,9 +18,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 @Entity(name="inventory")
+
 public class Inventory {
 
 	@Id
@@ -133,6 +137,7 @@ public class Inventory {
 	public String getProduct_code() {
 		return product_code;
 	}
+	
 	public void setProduct_code(String product_code) {
 		this.product_code = product_code;
 	}

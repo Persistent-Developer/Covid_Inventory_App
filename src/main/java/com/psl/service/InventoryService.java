@@ -3,6 +3,7 @@ package com.psl.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class InventoryService {
 	private IInventoryDao dao;
 	
 	
-	public void addProducts(Inventory i)
+	public void addProducts(Inventory i) throws Exception
 	{
 		dao.save(i);
 	}
@@ -37,30 +38,40 @@ public class InventoryService {
 	}
 	
 
+	public List<Inventory> getAllProducts() throws Exception
+	{
+		return dao.getAllProducts();
+	}
 	
-	public Inventory getProducts(String code)
+	
+	public Inventory getProducts(String code) throws Exception
 	{
 		return dao.findByProduct_code(code);
 	}
 	
 	
-	public Inventory getProducts(int id)
-	{
+	public Inventory getProductsById(int id) throws Exception
+	{	
 		return dao.findById(id).get();
 	}
 	
 	
-	public void removeProducts(int id)
+	public void removeProducts(int id) throws Exception
 	{
 		dao.deleteById(id);
 	}
 	
-	public List<String> findAll(int id)
+	public List<String> findAll(int id) throws Exception
 	{
 		return dao.findAllbyID(id);
 	}
 	
-	public List<Inventory> findByCategory(String name[])
+	public List<String> findAllGroups(int id) throws Exception
+	{
+		return dao.findAllGroups(id);
+	}
+	
+	public List<Inventory> findByCategory(String name[]) throws Exception
 	{
 		List<Inventory> ilist=new ArrayList<>();
 		
@@ -74,7 +85,65 @@ public class InventoryService {
 			}
 		}
 		
-		return ilist;
-		
+		return ilist;	
 	}
+	
+	public List<Inventory> findByMultipleValues1(String name,String category[],String group[],int id) throws Exception
+	{
+		List<Inventory> ilist=new ArrayList<>();
+		
+		for(String cat:category)
+		{
+			for(String grp:group)
+			{
+				List<Inventory> list=dao.findByMultipleValues1(name,cat,grp,id);
+				
+				for(Inventory i:list)
+				{
+					ilist.add(i);
+				}
+			}
+		}
+		return ilist;
+	}
+	
+	
+	public List<Inventory> findByMultipleValues2(String name,String group[],int id) throws Exception
+	{
+		List<Inventory> ilist=new ArrayList<>();
+		
+		for(String grp:group)
+		{
+			List<Inventory> list=dao.findByMultipleValues2(name,grp,id);
+				
+			for(Inventory i:list)
+			{
+				ilist.add(i);
+			}
+		}
+		return ilist;
+	}
+	
+	public List<Inventory> findByMultipleValues3(String name,String category[],int id) throws Exception
+	{
+		List<Inventory> ilist=new ArrayList<>();
+		
+		for(String cat:category)
+		{
+			List<Inventory> list=dao.findByMultipleValues3(name,cat,id);
+				
+			for(Inventory i:list)
+			{
+				ilist.add(i);
+			}
+		}
+		return ilist;
+	}
+	
+	public List<Inventory> findByMultipleValues4(String name,int id) throws Exception
+	{
+		return dao.findByMultipleValues4(name,id);
+	}
+	
+	
 }
