@@ -47,8 +47,5 @@ public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 	
 	@Query(value="select i.product_group from inventory i join store s on i.fk5_storeid=s.id where s.id=?1",nativeQuery = true)
 	public List<String> findAllGroups(int id);	
-	
-	@Query(value="delete from inventory where product_code=?1",nativeQuery = true)
-	public void deleteProducts(String str);
 
 }

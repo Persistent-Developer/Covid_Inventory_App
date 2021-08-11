@@ -25,6 +25,20 @@ public class InventoryService {
 		dao.save(i);
 	}
 	
+	public void updateProducts(Inventory i) throws Exception
+	{
+		int n1=i.getStock();
+		System.out.println(n1);
+		String code=i.getProduct_code();
+		Inventory temp=dao.findByProduct_code(code);
+		int n2=temp.getStock();
+		System.out.println(n2);
+		int n;
+		n=n1+n2;
+		i.setStock(n);
+		dao.save(i);
+	}
+	
 	
 	public void store(MultipartFile file) {
 		try {
@@ -59,11 +73,6 @@ public class InventoryService {
 	public void removeProducts(int id) throws Exception
 	{
 		dao.deleteById(id);
-	}
-	
-	public void deleteProducts(String str) throws Exception
-	{
-		dao.deleteProducts(str);
 	}
 	
 	public List<String> findAll(int id) throws Exception
