@@ -45,7 +45,7 @@ public class InventoryController {
 		
 	}
 	
-	//post productts using excel file
+	//post products using excel file
 	@PostMapping("/inventory/uploadFile")
     public ResponseEntity<String> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file/*, Model model*/) {
 		try {
@@ -63,7 +63,7 @@ public class InventoryController {
 	public ResponseEntity<Void> updateProducts(@RequestBody Inventory i)
 	{
 		try {
-			service.addProducts(i);
+			service.updateProducts(i);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -277,19 +277,6 @@ public class InventoryController {
 	{
 		try{
 			service.removeProducts(id);
-			return ResponseEntity.status(HttpStatus.CREATED).build();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-	
-	@DeleteMapping("/inventory")
-	public ResponseEntity<Void> deleteProducts(@RequestParam String product_code)
-	{
-		try{
-			service.deleteProducts(product_code);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 		}
 		catch (Exception e) {
