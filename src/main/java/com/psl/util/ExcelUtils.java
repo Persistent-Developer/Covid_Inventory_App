@@ -18,13 +18,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.util.SystemOutLogger;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.psl.dao.IInventoryDao;
 import com.psl.entity.Inventory;
 import com.psl.entity.Role;
 import com.psl.entity.Store;
 import com.psl.entity.User;
+import com.psl.service.InventoryService;
 
 public class ExcelUtils {
+	
+//	@Autowired
+//	private InventoryService service;
 
 	public static ByteArrayInputStream inventorysToExcel(List<Inventory> inventorys) throws IOException {
 		String[] COLUMNs = {"product_id", "product_name", "price", "stock","product_group","category","low_stock_indicator","in_stock","item_type","monthly_quota_per_user","yearly_quota_per_user"};
@@ -80,7 +86,7 @@ public class ExcelUtils {
 		}
 	}
 	
-	public static List<Inventory> parseInventoryExcelFile(InputStream is) {
+	public  List<Inventory> parseInventoryExcelFile(InputStream is) {
 		try {
     		Workbook workbook = new XSSFWorkbook(is);
     		
@@ -91,6 +97,8 @@ public class ExcelUtils {
     		Iterator<Row> rows = sheet.iterator();
     		
     		List<Inventory> lstInventorys = new ArrayList<Inventory>();
+    		
+			
     		
     		int rowNumber = 0;
     		while (rows.hasNext()) {
@@ -114,6 +122,28 @@ public class ExcelUtils {
     			
     				if(cellIndex==0) { 
     					//System.out.println("***");
+    					try {
+    						
+    						System.out.println("--");
+    						String code = currentCell.getStringCellValue();
+    						System.out.println("code = " + code);
+    						InventoryService service = new InventoryService();
+	    					Inventory i = service.getProducts(code);
+	    					System.out.println("Name = " + i.getProduct_id());
+	    					break;
+//	    					if(i!=null) {
+//	    						cellIndex = 3;
+//	    						//System.out.println("ac");
+//	    						
+//	    						int updateStock = (int) (i.getStock() + currentCell.getNumericCellValue());
+//	    						i.setStock(updateStock);
+//	    						dao.save(i);
+//	    						break;
+//	    					}
+    					} catch(Exception e) {
+    						
+    					}
+    					
     					System.out.println(currentCell.getStringCellValue());
     					invt.setProduct_code(currentCell.getStringCellValue());
     				} else if(cellIndex==1) { 
