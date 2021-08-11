@@ -24,6 +24,8 @@ public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 	@Query(value="select * from inventory where category=?1",nativeQuery = true)
 	List<Inventory> findByCategory(String name);
 	
+	@Query(value="select * from inventory where product_group=?1",nativeQuery = true)
+	List<Inventory> findByGroup(String name);
 
 	@Query(value="select i.* from inventory i join store s on i.fk5_storeid=s.id where i.product_code=?1",nativeQuery = true)
 	public Inventory findByProduct_code(String product_code);
@@ -44,10 +46,9 @@ public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 	public List<Inventory> getAllProducts();
 	
 	@Query(value="select i.product_group from inventory i join store s on i.fk5_storeid=s.id where s.id=?1",nativeQuery = true)
-	public List<String> findAllGroups(int id);
-
-	@Query(value="select * from inventory where product_code=?1",nativeQuery = true)
-	Inventory findByProduct_code(String product_code);
+	public List<String> findAllGroups(int id);	
 	
+	@Query(value="delete from inventory where product_code=?1",nativeQuery = true)
+	public void deleteProducts(String str);
 
 }

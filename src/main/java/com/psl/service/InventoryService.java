@@ -61,6 +61,11 @@ public class InventoryService {
 		dao.deleteById(id);
 	}
 	
+	public void deleteProducts(String str) throws Exception
+	{
+		dao.deleteProducts(str);
+	}
+	
 	public List<String> findAll(int id) throws Exception
 	{
 		return dao.findAllbyID(id);
@@ -78,6 +83,24 @@ public class InventoryService {
 		for(String nam:name)
 		{
 			List<Inventory> list=dao.findByCategory(nam);
+		
+			for(Inventory i:list)
+			{
+				ilist.add(i);
+			}
+		}
+		
+		return ilist;	
+	}
+	
+	
+	public List<Inventory> findByGroup(String name[]) throws Exception
+	{
+		List<Inventory> ilist=new ArrayList<>();
+		
+		for(String nam:name)
+		{
+			List<Inventory> list=dao.findByGroup(nam);
 		
 			for(Inventory i:list)
 			{

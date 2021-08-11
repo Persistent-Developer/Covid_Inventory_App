@@ -47,18 +47,14 @@ public class InventoryController {
 	
 	//post productts using excel file
 	@PostMapping("/inventory/uploadFile")
-
     public ResponseEntity<String> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file/*, Model model*/) {
 		try {
 			service.store(file);
 			return ResponseEntity.of(Optional.of("File uploaded successfully"));
-			//model.addAttribute("message", "File uploaded successfully!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			//model.addAttribute("message", "Fail! -> uploaded filename: " + file.getOriginalFilename());
 		}    
-
     }
 	
 	
@@ -81,7 +77,15 @@ public class InventoryController {
 	@GetMapping("/inventory")
 	public ResponseEntity<List<Inventory>> getAllProducts()
 	{
-		List<Inventory> list=service.getAllProducts();
+		List<Inventory> list = null;
+		try {
+			list=service.getAllProducts();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 		if(list.size()<=0)
 		{
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -103,6 +107,7 @@ public class InventoryController {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		if(int1==null)
 		{
@@ -125,6 +130,7 @@ public class InventoryController {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		if(int1==null)
 		{
@@ -139,7 +145,16 @@ public class InventoryController {
 	@GetMapping("/inventory/categories")
 	public ResponseEntity<List<String>> findAllbyID(@RequestParam int store_id)
 	{
-		List<String> list=service.findAll(store_id);
+		List<String> list=null;
+		try {
+			list=service.findAll(store_id);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
 		if(list.size()<=0)
 		{
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -152,7 +167,16 @@ public class InventoryController {
 	@GetMapping("/inventory/groups")
 	public ResponseEntity<List<String>> findAllGroups(@RequestParam int store_id)
 	{
-		List<String> list=service.findAllGroups(store_id);
+		List<String> list = null;
+		try {
+			list=service.findAllGroups(store_id);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			
+		}
 		if(list.size()<=0)
 		{
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -163,7 +187,7 @@ public class InventoryController {
 	
 	//Get products based on categories
 	@GetMapping("/inventory/category")
-	public ResponseEntity<List<Inventory>> findAllbyproductid(@RequestParam(name="category_name") String name[])
+	public ResponseEntity<List<Inventory>> findAllbyCategory(@RequestParam(name="category_name") String name[])
 	{
 		List<Inventory> list=null;
 		
@@ -173,6 +197,7 @@ public class InventoryController {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		if(list.size()<=0)
@@ -210,6 +235,7 @@ public class InventoryController {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		if(list.size()<=0)
@@ -218,6 +244,30 @@ public class InventoryController {
 		}
 		
 		return ResponseEntity.of(Optional.of(list));
+	}
+	
+	
+	//Get products based on Group
+	@GetMapping("/inventory/group")
+	public ResponseEntity<List<Inventory>> findAllbyGroups(@RequestParam(name="product_group") String group[])
+	{
+		List<Inventory> list=null;
+			
+		try {
+			 list=service.findByGroup(group);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	
+		if(list.size()<=0)
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+			
+		return ResponseEntity.of(Optional.of(list)); 
 	}
 	
 	
@@ -235,7 +285,17 @@ public class InventoryController {
 		}
 	}
 	
-	
-	
-	
+	@DeleteMapping("/inventory")
+	public ResponseEntity<Void> deleteProducts(@RequestParam String product_code)
+	{
+		try{
+			service.deleteProducts(product_code);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+		
 }
