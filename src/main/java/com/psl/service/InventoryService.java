@@ -19,7 +19,6 @@ public class InventoryService {
 	@Autowired
 	private IInventoryDao dao;
 	
-	
 	public void addProducts(Inventory i) throws Exception
 	{
 		dao.save(i);
@@ -30,7 +29,9 @@ public class InventoryService {
 		int n1=i.getStock();
 		System.out.println(n1);
 		String code=i.getProduct_code();
+		System.out.println(code);
 		Inventory temp=dao.findByProduct_code(code);
+		System.out.println("$$");
 		int n2=temp.getStock();
 		System.out.println(n2);
 		int n;
@@ -42,11 +43,10 @@ public class InventoryService {
 	
 	public void store(MultipartFile file) {
 		try {
-			ExcelUtils util = new ExcelUtils();
-			List<Inventory> lstInventorys = util.parseInventoryExcelFile(file.getInputStream());
-			//System.out.println(lstInventorys);
-    		// Save Customers to DataBase
-    		dao.saveAll(lstInventorys);
+
+			ExcelUtils util = new ExcelUtils(dao);
+			util.parseInventoryExcelFile(file.getInputStream());
+			
         } catch (IOException e) {
         	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
         }

@@ -13,6 +13,7 @@ import com.sun.istack.NotNull;
 
 public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 	
+	
 	@Query(value="select distinct i.category from inventory i join store s on i.fk5_storeid=s.id where s.id=?1",nativeQuery = true)
 	public List<String> findAllbyID(int id);
 	
@@ -29,6 +30,11 @@ public interface IInventoryDao extends CrudRepository<Inventory, Integer>{
 
 	@Query(value="select i.* from inventory i join store s on i.fk5_storeid=s.id where i.product_code=?1",nativeQuery = true)
 	public Inventory findByProduct_code(String product_code);
+	
+	@Query(value="select * from inventory i where i.product_code=?1",nativeQuery = true)
+	public Inventory findByProduct_code1(String product_code);
+
+	
 	
 	@Query(value="select * from inventory i join store s on i.fk5_storeid=s.id where i.product_name=?1 and i.category=?2 and i.product_group=?3 and s.id=?4",nativeQuery=true)
 	public List<Inventory> findByMultipleValues1(String name,String category,String group,int id);

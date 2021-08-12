@@ -46,7 +46,7 @@ public class InventoryController {
 	}
 	
 	//post products using excel file
-	@PostMapping("/inventory/uploadFile")
+	@PutMapping("/inventory/uploadFile")
     public ResponseEntity<String> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file/*, Model model*/) {
 		try {
 			service.store(file);
