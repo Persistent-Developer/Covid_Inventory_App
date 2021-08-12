@@ -4,9 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -20,8 +18,8 @@ public class Role {
 		super();
 	}
 	
-//	@OneToMany(mappedBy="role")  
-//	private List<User> users; 
+	@OneToMany(mappedBy="role",cascade = CascadeType.ALL)  
+	private List<User> users; 
 	
 	public Role(int roleid, String roleName) {
 	super();

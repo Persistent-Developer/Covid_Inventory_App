@@ -1,6 +1,7 @@
 package com.psl.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,6 +21,8 @@ public class UserService {
 	private UserDAO dao;
 	
 	UserExcel userExcel = new UserExcel();
+
+//---------------------------------------------------------------------------	
 	
 	public void addUser(User user)
 	{
@@ -38,11 +41,57 @@ public class UserService {
 
 		dao.save(user);
 	}
-	
+
+//---------------------------------------------------------------------------	
 	public User getUser(int id)
 	{
 		return dao.findById(id).get();
 	}
+    
+	public List<User> getAllUsers()
+	{
+		List<User> users = new ArrayList<User>();
+		
+		for(User user : dao.findAll())
+			users.add(user);
+		
+		return users;
+	}
+	
+	public List<User> getAllCustomers()
+	{
+		List<User> users = new ArrayList<User>();
+		
+		for(User user : dao.findAll()) {
+			
+			if((user.getRole()).getRoleId() == 3)
+					users.add(user);
+		}
+		
+		return users;
+	}
+//---------------------------------------------------------------------------	
+	
+	public String deleteUserById(int id)
+	{
+		try {
+		User user = dao.findById(id).get();
+		
+		if(user.getUserId() == id)
+			dao.deleteById(id);
+		
+        return "Deletion Successful";
+		
+		}
+		catch (Exception e) {
+			System.out.println("User with id "+ id + " is not found");
+			
+		return "Deletion unsuccessful as user id "+ id + " is not found" ;
+		}
+	}
+
+//---------------------------------------------------------------------------	
+
 	
     public void save(MultipartFile file)
     {
@@ -57,5 +106,26 @@ public class UserService {
 	      throw new RuntimeException("fail to store excel data: " + e.getMessage());
 	    }
 	  }
+//---------------------------------------------------------------------------	
 
+	public String updateUserById(User user, int id) {
+		try {
+			User user1 = dao.findById(id).get();
+			
+			if(user1.getUserId() == id)
+				dao.save(user);
+			
+	        return "updation Successful";
+			
+			}
+			catch (Exception e) {
+				System.out.println("User with id "+ id + " is not found");
+				
+			return "Updation unsuccessful as user id "+ id + " is not found" ;
+			}
+		
+	}
+	
+	
+	
 }

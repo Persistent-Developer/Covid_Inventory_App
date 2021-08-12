@@ -1,8 +1,6 @@
 package com.psl.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,7 +19,7 @@ public class User {
 	private int purchaseLimitPerYear;
 	private int purchaseLimitPerMonth;
 	
-	@ManyToOne(targetEntity = Role.class,cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Role.class)
 	@JoinColumn(name="roleId", referencedColumnName = "roleId")
 	private Role role;
 	
