@@ -9,7 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Orders {
@@ -24,7 +26,11 @@ public class Orders {
 	private String contact;
 	
 	@ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "odList")
-	List<Inventory> invList = new ArrayList<>();
+	List<Inventory> invList;
+	
+	@ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name ="user_id")
+	private User user_id; 
 	
 	
 	public List<Inventory> getInvList() {
@@ -70,9 +76,15 @@ public class Orders {
 	public void setOrder_status(String order_status) {
 		this.order_status = order_status;
 	}
+	public User getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String order_status) {
+		this.order_status = order_status;
+	}
 	
 	public Orders(int order_id, String order_status, String delivery_date, String time_slot_start, String time_slot_end,
-			String contact, List<Inventory> invList) {
+			String contact, List<Inventory> invList,User user_id) {
 		super();
 		this.order_id = order_id;
 		this.order_status = order_status;
@@ -81,6 +93,7 @@ public class Orders {
 		this.time_slot_end = time_slot_end;
 		this.contact = contact;
 		this.invList = invList;
+		this.user_id = user_id;
 	}
 	public Orders() {
 		
@@ -90,7 +103,7 @@ public class Orders {
 	public String toString() {
 		return "Orders [order_id=" + order_id + ", order_status=" + order_status + ", delivery_date=" + delivery_date
 				+ ", time_slot_start=" + time_slot_start + ", time_slot_end=" + time_slot_end + ", contact=" + contact
-				+ ", invList=" + invList + "]";
+				+ ", invList=" + invList + ", user_id=" + user_id + "]";
 	}
 	
 	

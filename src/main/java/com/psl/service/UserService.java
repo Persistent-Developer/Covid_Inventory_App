@@ -9,20 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.psl.dao.UserDAO;
+import com.psl.dao.IUserDAO;
 import com.psl.entity.Role;
 import com.psl.entity.User;
-import com.psl.excelhelper.UserExcel;
+import com.psl.util.ExcelUtils;
+
 
 @Service("UserService")
 public class UserService {
 
 	@Autowired
-	private UserDAO dao;
-	
-	UserExcel userExcel = new UserExcel();
-
-//---------------------------------------------------------------------------	
+	private IUserDAO dao;
 	
 	public void addUser(User user)
 	{
@@ -30,11 +27,9 @@ public class UserService {
 		if(role.getRoleId()== 1) {
 			role.setRoleName("Admin");
 		}
-		
 		else if(role.getRoleId()== 2) {
 			role.setRoleName("Aggregator");
 		}
-		
 		else if(role.getRoleId()== 3) {
 			role.setRoleName("Customer");
 		}
@@ -93,21 +88,17 @@ public class UserService {
 //---------------------------------------------------------------------------	
 
 	
-    public void save(MultipartFile file)
-    {
-	   
-      try {
-	      List<User> users = userExcel.excelToUsers(file.getInputStream());
-	      System.out.println("----------returning from userExcel -----");
-	      System.out.println(users);
-	      dao.saveAll(users);
-	    
-	    } catch (IOException e) {
-	      throw new RuntimeException("fail to store excel data: " + e.getMessage());
-	    }
-	  }
-//---------------------------------------------------------------------------	
-
+	public void store(MultipartFile file) {
+		try {
+			
+			List<User> lstUsers = ExcelUtils.parseUserExcelFile(file.getInputStream());
+			
+    		dao.saveAll(lstUsers);
+        } catch (IOException e) {
+        	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
+	}
+	
 	public String updateUserById(User user, int id) {
 		try {
 			User user1 = dao.findById(id).get();
@@ -119,12 +110,52 @@ public class UserService {
 			
 			}
 			catch (Exception e) {
-				System.out.println("User with id "+ id + " is not found");
 				
 			return "Updation unsuccessful as user id "+ id + " is not found" ;
 			}
 		
 	}
+	
+//	public String changeEmailId(String email, int id) {
+//		try {
+//			User user1 = dao.findById(id).get();
+//			
+//			if(user1.getUserId() == id)
+//				//dao.changeEmailId(email, id);
+//			
+//	        return "updation Successful";
+//			
+//			}
+//			catch (Exception e) {
+//				
+//			return "Updation unsuccessful as user id "+ id + " is not found";
+//			}
+//		
+//	}
+
+	public String changeEmailId(String oldEmail, String newEmail, int id) {
+		try {
+			
+			User user = dao.findById(id).get();
+			
+			if(user.getUserId() == id && user.getEmail().equals(oldEmail))
+			{
+				user.setEmail(newEmail);
+				//dao.save(user);
+			   dao.changeEmailId(newEmail, id);
+			   return "New Email \""+ newEmail + "\" is set for user with id " + id;
+			}
+			else
+			{
+				return "check your old Email again";
+			}
+			
+		}catch (Exception e) {
+			return "Email Updation unsuccessful as user id "+ id + " is not found";	
+		}
+		
+	}
+
 	
 	
 	

@@ -10,7 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@Entity(name="store")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Store {
 	
 	@Id

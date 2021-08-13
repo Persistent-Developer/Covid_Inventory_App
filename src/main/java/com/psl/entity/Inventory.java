@@ -18,9 +18,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 @Entity(name="inventory")
+
 public class Inventory {
 
 	@Id
@@ -130,19 +134,20 @@ public class Inventory {
 		this.store = store;
 	}
 	
-	
 	public String getProduct_code() {
 		return product_code;
 	}
+	
 	public void setProduct_code(String product_code) {
 		this.product_code = product_code;
 	}
 	public Inventory() {
 		super();
 	}
-	public Inventory(int product_id, String product_code, String product_name, double price, int stock,
-			String product_group, String category, int low_stock_indicator, String in_stock, String item_type,
-			String monthly_quota_per_user, String yearly_quota_per_user, List<Orders> odList, Store store) {
+
+	public Inventory(int product_id, String product_name, double price, int stock, String product_group,
+			String category, int low_stock_indicator, String in_stock, String item_type, String monthly_quota_per_user,
+			String yearly_quota_per_user, List<Orders> odList,Store store,String product_code) {
 		super();
 		this.product_id = product_id;
 		this.product_code = product_code;
