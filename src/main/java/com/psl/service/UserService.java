@@ -116,23 +116,6 @@ public class UserService {
 		
 	}
 	
-//	public String changeEmailId(String email, int id) {
-//		try {
-//			User user1 = dao.findById(id).get();
-//			
-//			if(user1.getUserId() == id)
-//				//dao.changeEmailId(email, id);
-//			
-//	        return "updation Successful";
-//			
-//			}
-//			catch (Exception e) {
-//				
-//			return "Updation unsuccessful as user id "+ id + " is not found";
-//			}
-//		
-//	}
-
 	public String changeEmailId(String oldEmail, String newEmail, int id) {
 		try {
 			
@@ -141,8 +124,8 @@ public class UserService {
 			if(user.getUserId() == id && user.getEmail().equals(oldEmail))
 			{
 				user.setEmail(newEmail);
-				//dao.save(user);
-			   dao.changeEmailId(newEmail, id);
+				dao.save(user);
+			   //dao.changeEmailId(newEmail, id);
 			   return "New Email \""+ newEmail + "\" is set for user with id " + id;
 			}
 			else
@@ -155,8 +138,5 @@ public class UserService {
 		}
 		
 	}
-
-	
-	
 	
 }

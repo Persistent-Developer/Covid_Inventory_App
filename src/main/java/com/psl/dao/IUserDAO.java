@@ -8,9 +8,9 @@ import com.psl.entity.User;
 
 public interface IUserDAO extends CrudRepository<User, Integer> {
 	
-	@Modifying
-	@Query("update User set email=:?1 where id=:?2")
-	public void changeEmailId(String newEmail ,Integer id);
-	
+//	@Modifying
+//	@Query("update User set email=:?1 where id=:?2")
+//	public void changeEmailId(String newEmail ,Integer id);
+//	
 
 }

@@ -195,18 +195,18 @@ public class ExcelUtils {
     					invt.setMonthly_quota_per_user(temp);
     				} else if(cellIndex==10) { 
     					flag=0;
-    					switch(currentCell.getCellType()) {
-
-    					case NUMERIC: 
-        					System.out.println(currentCell.getNumericCellValue());
-        	
-        					invt.setYearly_quota_per_user(Integer.toString((int) currentCell.getNumericCellValue()));
-        					break;
-    					case STRING:
-    						System.out.println(currentCell.getStringCellValue());
-    						invt.setYearly_quota_per_user(currentCell.getStringCellValue());
-    						break;
-    					}
+//    					switch(currentCell.getCellType()) {
+//
+//    					case NUMERIC: 
+//        					System.out.println(currentCell.getNumericCellValue());
+//        	
+//        					invt.setYearly_quota_per_user(Integer.toString((int) currentCell.getNumericCellValue()));
+//        					break;
+//    					case STRING:
+//    						System.out.println(currentCell.getStringCellValue());
+//    						invt.setYearly_quota_per_user(currentCell.getStringCellValue());
+//    						break;
+//    					}
     					
     				} else if(cellIndex==11) { 
     					flag=0;
