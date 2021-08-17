@@ -67,22 +67,14 @@ public class UserService {
 	}
 //---------------------------------------------------------------------------	
 	
-	public String deleteUserById(int id)
+	public String deleteUserById(int id) throws Exception
 	{
-		try {
 		User user = dao.findById(id).get();
 		
 		if(user.getUserId() == id)
 			dao.deleteById(id);
 		
-        return "Deletion Successful";
-		
-		}
-		catch (Exception e) {
-			System.out.println("User with id "+ id + " is not found");
-			
-		return "Deletion unsuccessful as user id "+ id + " is not found" ;
-		}
+        return "Deletion Successful";	
 	}
 
 //---------------------------------------------------------------------------	
@@ -99,26 +91,17 @@ public class UserService {
         }
 	}
 	
-	public String updateUserById(User user, int id) {
-		try {
+	public String updateUserById(User user, int id) throws Exception  {
 			User user1 = dao.findById(id).get();
 			
 			if(user1.getUserId() == id)
 				dao.save(user);
 			
-	        return "updation Successful";
-			
-			}
-			catch (Exception e) {
-				
-			return "Updation unsuccessful as user id "+ id + " is not found" ;
-			}
-		
+	        return "updation Successful";	
 	}
 	
-	public String changeEmailId(String oldEmail, String newEmail, int id) {
-		try {
-			
+	public String changeEmailId(String oldEmail, String newEmail, int id) throws Exception  {
+		
 			User user = dao.findById(id).get();
 			
 			if(user.getUserId() == id && user.getEmail().equals(oldEmail))
@@ -132,11 +115,25 @@ public class UserService {
 			{
 				return "check your old Email again";
 			}
-			
-		}catch (Exception e) {
-			return "Email Updation unsuccessful as user id "+ id + " is not found";	
-		}
 		
+		
+	}
+
+public String changePassword(String oldPassword, String newPassword, int id) throws Exception {
+
+		    User user = dao.findById(id).get();
+			
+			if(user.getUserId() == id && user.getPassword().equals(oldPassword))
+			{
+				user.setPassword(newPassword);
+				dao.save(user);
+			   return "New Password is set for user with id " + id;
+			}
+			else
+			{
+				return "check your old Password again";
+			}
+			
 	}
 	
 }
