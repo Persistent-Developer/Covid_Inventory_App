@@ -1,5 +1,7 @@
 package com.psl.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,5 +28,17 @@ public class StoreBreaksController {
 	public StoreBreaks getStoreBreaks(@PathVariable int id)
 	{
 		return service.getStoreBreaks(id);
+	}
+	
+	@GetMapping("/storebreak/start/{id}")
+	public List<String> getStoreStartBreaks(@PathVariable int id) {
+		
+		return service.getAllStartBreaks(id);
+	}
+	
+	@GetMapping("/storebreak/end/{id}")
+	public List<String> getStoreEndBreaks(@PathVariable int id) {
+		
+		return service.getAllEndBreaks(id);
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.psl.dao.IInventoryDao;
 import com.psl.entity.Inventory;
+import com.psl.entity.User;
 import com.psl.util.ExcelUtils;
 
 @Service("service")

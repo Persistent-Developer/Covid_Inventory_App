@@ -1,16 +1,17 @@
 package com.psl.dao;
 
-import org.springframework.data.jpa.repository.Modifying;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.psl.entity.User;
 
 public interface IUserDAO extends CrudRepository<User, Integer> {
-	
-//	@Modifying
-//	@Query("update User set email=:?1 where id=:?2")
-//	public void changeEmailId(String newEmail ,Integer id);
-//	
 
+	@Query(value="select * from user u where u.ph_number=?1",nativeQuery = true)
+	public User findByPhNumber(String ph_number);
+	
+	@Query(value="select * from user u where u.email=?1",nativeQuery = true)
+	public User findByEmail(String email);
 }

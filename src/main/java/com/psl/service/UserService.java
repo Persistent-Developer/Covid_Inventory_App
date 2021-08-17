@@ -80,12 +80,19 @@ public class UserService {
 //---------------------------------------------------------------------------	
 
 	
+	public List<User> getAllUser() {
+		return (List<User>) dao.findAll();
+	}
+	
 	public void store(MultipartFile file) {
 		try {
 			
-			List<User> lstUsers = ExcelUtils.parseUserExcelFile(file.getInputStream());
+			ExcelUtils util = new ExcelUtils(dao);
+			util.parseUserExcelFile(file.getInputStream());
 			
-    		dao.saveAll(lstUsers);
+			//List<User> lstUsers = ExcelUtils.parseUserExcelFile(file.getInputStream());
+			
+    		//dao.saveAll(lstUsers);
         } catch (IOException e) {
         	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
         }
@@ -101,39 +108,47 @@ public class UserService {
 	}
 	
 	public String changeEmailId(String oldEmail, String newEmail, int id) throws Exception  {
+	
+		User user = dao.findById(id).get();
 		
-			User user = dao.findById(id).get();
-			
-			if(user.getUserId() == id && user.getEmail().equals(oldEmail))
-			{
-				user.setEmail(newEmail);
-				dao.save(user);
-			   //dao.changeEmailId(newEmail, id);
-			   return "New Email \""+ newEmail + "\" is set for user with id " + id;
-			}
-			else
-			{
-				return "check your old Email again";
-			}
-		
-		
-	}
-
-public String changePassword(String oldPassword, String newPassword, int id) throws Exception {
-
-		    User user = dao.findById(id).get();
-			
-			if(user.getUserId() == id && user.getPassword().equals(oldPassword))
-			{
-				user.setPassword(newPassword);
-				dao.save(user);
-			   return "New Password is set for user with id " + id;
-			}
-			else
-			{
-				return "check your old Password again";
-			}
-			
+		if(user.getUserId() == id && user.getEmail().equals(oldEmail))
+		{
+			user.setEmail(newEmail);
+			dao.save(user);
+		   //dao.changeEmailId(newEmail, id);
+		   return "New Email \""+ newEmail + "\" is set for user with id " + id;
+		}
+		else
+		{
+			return "check your old Email again";
+		}
+	
+	
 	}
 	
+	public String changePassword(String oldPassword, String newPassword, int id) throws Exception {
+	
+	    User user = dao.findById(id).get();
+		
+		if(user.getUserId() == id && user.getPassword().equals(oldPassword))
+		{
+			user.setPassword(newPassword);
+			dao.save(user);
+		   return "New Password is set for user with id " + id;
+		}
+		else
+		{
+			return "check your old Password again";
+		}
+		
+	}
+	
+	public User findByPhNumber(String phNumber) throws Exception {
+		  return dao.findByPhNumber(phNumber);
+	}
+
+	public User findByEmail(String email) throws Exception {
+		return dao.findByPhNumber(email);
+	}
+		
 }

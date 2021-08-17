@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 import com.psl.dao.IInventoryDao;
+import com.psl.dao.IUserDAO;
 import com.psl.entity.Inventory;
 import com.psl.entity.Role;
 import com.psl.entity.Store;
@@ -33,9 +34,14 @@ public class ExcelUtils {
 	
 
 	private IInventoryDao dao;
+	private IUserDAO udao;
 	
 	public ExcelUtils(IInventoryDao dao) {
 		this.dao = dao;
+	}
+	
+	public ExcelUtils(IUserDAO udao) {
+		this.udao = udao;
 	}
 
 	public static ByteArrayInputStream inventorysToExcel(List<Inventory> inventorys) throws IOException {
@@ -233,7 +239,7 @@ public class ExcelUtils {
         }
 	}
 	
-	public static List<User> parseUserExcelFile(InputStream is) {
+	public void parseUserExcelFile(InputStream is) {
 		try {
     		Workbook workbook = new XSSFWorkbook(is);
     		
@@ -244,6 +250,7 @@ public class ExcelUtils {
     		Iterator<Row> rows = sheet.iterator();
     		
     		List<User> lstUsers = new ArrayList<User>();
+    		int flag=0;
     		
     		int rowNumber = 0;
     		while (rows.hasNext()) {
@@ -267,49 +274,78 @@ public class ExcelUtils {
     			
     				if(cellIndex==0) { 
     					//System.out.println("***");
+    					
+    					try {
+    						
+    						String number = currentCell.getStringCellValue();
+    						System.out.println("number = " + number);
+    						
+	    					User u = udao.findByPhNumber(number);
+	    					
+	    					
+	    					
+	    					if(u!=null) {
+	    						
+	    						System.out.println("Name = " + u.getUserName() + " already present");
+	    						flag=1;
+	    						break;
+	    					}
+    					} catch(Exception e) {
+    						System.out.println("In exception...");
+    					}
+    					
+    					flag=0;
     					System.out.println(currentCell.getStringCellValue());
     					usr.setPhNumber(currentCell.getStringCellValue());
     				} else if(cellIndex==1) { 
+    					flag=0;
     					System.out.println(currentCell.getStringCellValue());
     					usr.setUserName(currentCell.getStringCellValue());
     				} else if(cellIndex==2) { 
+    					flag=0;
     					System.out.println(currentCell.getNumericCellValue());
     					Role role = new Role();
     					role.setRoleId((int)currentCell.getNumericCellValue());
     					usr.setRole(role);
     				} else if(cellIndex==3) { 
+    					flag=0;
     					System.out.println(currentCell.getStringCellValue());
     					usr.setStatus(currentCell.getStringCellValue());
     				} else if(cellIndex==4) { 
+    					flag=0;
     					System.out.println(currentCell.getStringCellValue());
     					usr.setCategory(currentCell.getStringCellValue());
     				}else if(cellIndex==5) {
+    					flag=0;
     					System.out.println(currentCell.getNumericCellValue());
     					usr.setPurchaseLimitPerYear((int)currentCell.getNumericCellValue());
     				} else if(cellIndex==6) { 
+    					flag=0;
     					System.out.println(currentCell.getNumericCellValue());
     					usr.setPurchaseLimitPerMonth((int) currentCell.getNumericCellValue());
     				} else if(cellIndex==7) { 
+    					flag=0;
     					System.out.println(currentCell.getStringCellValue());
     					usr.setEmail(currentCell.getStringCellValue());
     				} else if(cellIndex==8) { 
+    					flag=0;
     					System.out.println(currentCell.getStringCellValue());
     					usr.setPassword(currentCell.getStringCellValue());
     				}
     				
     				cellIndex++;
     			}
+    			if(flag==0)
+    				udao.save(usr);
+    			rowNumber++;
     			
-    			lstUsers.add(usr);
+    			//lstUsers.add(usr);
     		}
     		
-//    		for(Inventory inv : lstInventorys) {
-//    			System.out.println(inv.getProduct_id());
-//    		}
     		// Close WorkBook
     		workbook.close();
     		
-    		return lstUsers;
+    		//return lstUsers;
         } catch (IOException e) {
         	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
         }
