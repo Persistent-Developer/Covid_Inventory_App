@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.psl.entity.User;
 
 public interface IUserDAO extends CrudRepository<User, Integer> {
-	
+
 	@Query(value="select * from user u where u.ph_number=?1",nativeQuery = true)
 	public User findByPhNumber(String ph_number);
 }

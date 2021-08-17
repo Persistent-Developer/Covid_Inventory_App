@@ -1,8 +1,7 @@
 package com.psl.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +15,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
-	
+
 	private String userName;
 	private String phNumber;
 	private String password;
@@ -30,7 +29,7 @@ public class User {
 	@JoinColumn(name="role_id")
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Role role;
-	
+
 	public User() {
 		super();
 	}
@@ -43,11 +42,11 @@ public class User {
 		this.role = role;
 	}
 
-	
-	
+
+
 	public User(int userId, String userName, String phNumber, String password, String email, String status,
 			String category, int purchaseLimitPerYear, int purchaseLimitPerMonth, Role role) {
-		
+
 		this.userId = userId;
 		this.userName = userName;
 		this.phNumber = phNumber;
@@ -168,5 +167,5 @@ public class User {
 				+ purchaseLimitPerYear + ", purchaseLimitPerMonth=" + purchaseLimitPerMonth + ", role=" + role + "]";
 	}
 
-	
+
 }
