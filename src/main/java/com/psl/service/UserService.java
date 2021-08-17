@@ -43,12 +43,19 @@ public class UserService {
 		return dao.findById(id).get();
 	}
 	
+	public List<User> getAllUser() {
+		return (List<User>) dao.findAll();
+	}
+	
 	public void store(MultipartFile file) {
 		try {
 			
-			List<User> lstUsers = ExcelUtils.parseUserExcelFile(file.getInputStream());
+			ExcelUtils util = new ExcelUtils(dao);
+			util.parseUserExcelFile(file.getInputStream());
 			
-    		dao.saveAll(lstUsers);
+			//List<User> lstUsers = ExcelUtils.parseUserExcelFile(file.getInputStream());
+			
+    		//dao.saveAll(lstUsers);
         } catch (IOException e) {
         	throw new RuntimeException("FAIL! -> message = " + e.getMessage());
         }

@@ -1,5 +1,6 @@
 package com.psl.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,9 @@ public class StoreHolidayService {
 	public StoreHoliday getStoreHoliday(int id)
 	{
 		return dao.findById(id).get();
+	}
+	
+	public List<String> getAllholiday(int id) {
+		return dao.getAllHolidays(id);
 	}
 }

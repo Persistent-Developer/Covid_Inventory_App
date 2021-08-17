@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class User {
 	@Id
@@ -26,6 +28,7 @@ public class User {
 	
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="role_id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Role role;
 	
 	public User() {

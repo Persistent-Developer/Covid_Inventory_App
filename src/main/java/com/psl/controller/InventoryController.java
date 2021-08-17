@@ -1,8 +1,11 @@
 package com.psl.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,8 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class InventoryController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(InventoryController.class);
+	
 	@Autowired
 	private InventoryService service;
 	
@@ -47,14 +52,22 @@ public class InventoryController {
 	
 	//post products using excel file
 	@PutMapping("/inventory/uploadFile")
-    public ResponseEntity<String> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file/*, Model model*/) {
+    public ResponseEntity<?> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file/*, Model model*/) {
+		LOGGER.info("Called : /inventory/uploadFile");
+		List<Inventory> prodList = new ArrayList<>();
 		try {
+			LOGGER.info("Inserting inventory");
 			service.store(file);
-			return ResponseEntity.of(Optional.of("File uploaded successfully"));
+			
+			prodList = service.getAllProducts();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}    
+			
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}   
+		
+		return new ResponseEntity<>(prodList,HttpStatus.OK);
     }
 	
 	

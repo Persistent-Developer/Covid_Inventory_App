@@ -27,5 +27,10 @@ public class StoreTimeController {
 	{
 		return service.getStoreTime(id);
 	}
+	
+//	@GetMapping("/test/{id}")
+//	public void test(@PathVariable int id) {
+//		service.getAllStoreSlots(id);
+//	}
 
 }

@@ -1,5 +1,9 @@
 package com.psl.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,17 +73,18 @@ public class UserController {
 //---------------------------------------------------------------------------	
 	
 	@PostMapping("/user/uploadFile")
-    public String uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file) {
+    public List<User> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file) {
 		try {
 			service.store(file);
-			System.out.println("fas");
 			
 		} catch (Exception e) {
 			
 		}
+		List<User> uList = service.getAllUser();
 		
-		return "file updated succesfully ";
-		
+		//return "file updated succesfully";
+		//return service.getAllUser();
+		return uList;
 	}
 
 }
