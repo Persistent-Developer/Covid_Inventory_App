@@ -1,9 +1,9 @@
 package com.psl.controller;
 
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.collections4.map.HashedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,40 +26,72 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 //---------------------------------------------------------------------------
 	@GetMapping("/user/{id}")
 	public User getUser(@PathVariable int id)
 	{
-		return service.getUser(id);
+		User usr = new User();
+		try {
+			LOGGER.debug("In getUser controller using id...");
+			usr = service.getUser(id);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return usr;
 	}
 
 	@GetMapping("/users")
 	public List<User> getAllUsers()
 	{
-		return service.getAllUsers();
+		List<User> lstUser=null;
+		try {
+			LOGGER.debug("In get all User controller...");
+			lstUser = service.getAllUsers();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lstUser;
 	}
 
 	@GetMapping("/user/customers")
 	public List<User> getAllCustomers()
 	{
-		return service.getAllCustomers();
+		List<User> lstUser=null;
+		try {
+			LOGGER.debug("In get all Customers controller...");
+			lstUser = service.getAllCustomers();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lstUser;
 	}
 
 //---------------------------------------------------------------------------
 	@PostMapping("/user/register")
 	public void addUser(@RequestBody User user)
 	{
-		service.addUser(user);
+		LOGGER.info("Called : /user/register      to add user");
+		try {
+			service.addUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 //---------------------------------------------------------------------------
 
 	@DeleteMapping("/users/{id}")
 	public String deleteUserById(@PathVariable int id)
-	{
-		return service.deleteUserById(id);
+	{	String msg=null;
+		try {
+			msg = service.deleteUserById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return msg;
 	}
 
 //---------------------------------------------------------------------------
@@ -67,7 +99,15 @@ public class UserController {
 	@PutMapping("/users/{id}")
 	public String updateUserById(@RequestBody User user,@PathVariable int id)
 	{
-		return service.updateUserById(user,id);
+		LOGGER.info("Called : /user/{id}      to update user by id");
+		String msg=null;
+		try {
+			msg = service.updateUserById(user,id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return msg;
 	}
 
 
@@ -76,11 +116,12 @@ public class UserController {
 
 	@PostMapping("/user/uploadFile")
     public List<User> uploadMultipartFile(@RequestParam("uploadfile") MultipartFile file) {
+		LOGGER.info("Called : /user/uploadFile      to add multiple users");
 		try {
 			service.store(file);
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		List<User> uList = service.getAllUser();
 
@@ -92,9 +133,17 @@ public class UserController {
 	@PostMapping("/user/change/emailid/{id}")
 	public String changeEmail(@RequestBody ObjectNode objectNode,@PathVariable int id)
 	{
+		LOGGER.info("Called : /user/change/emailid/{id}      to update email id of user");
 		String oldEmail = objectNode.get("Old Email").asText();
 		String newEmail = objectNode.get("New Email").asText();
-		return service.changeEmailId(oldEmail,newEmail, id);
+		
+		String msg=null;
+		try {
+			msg=service.changeEmailId(oldEmail,newEmail, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
 	}
 
 }

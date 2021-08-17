@@ -7,11 +7,11 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.psl.entity.Inventory;
 import com.psl.service.InventoryService;
 
-import io.swagger.annotations.ApiOperation;
+
 
 
 @RestController
@@ -39,6 +39,7 @@ public class InventoryController {
 	@PostMapping("/inventory")
 	public ResponseEntity<Void> addProducts(@RequestBody Inventory i)
 	{
+		LOGGER.info("Called : /inventory      to add single product");
 		try {
 			service.addProducts(i);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -75,6 +76,7 @@ public class InventoryController {
 	@PutMapping("/inventory")
 	public ResponseEntity<Void> updateProducts(@RequestBody Inventory i)
 	{
+		LOGGER.info("Called : /inventory           to update product");
 		try {
 			service.updateProducts(i);
 			return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -92,6 +94,7 @@ public class InventoryController {
 	{
 		List<Inventory> list = null;
 		try {
+			LOGGER.debug("In getAllProducts controller...");
 			list=service.getAllProducts();
 		}
 		catch(Exception e)
@@ -115,6 +118,7 @@ public class InventoryController {
 		Inventory int1=null;
 		
 		try {
+			LOGGER.debug("In get products controller using id...");
 			int1=service.getProductsById(id);
 		}
 		catch(Exception e)
@@ -138,6 +142,7 @@ public class InventoryController {
 		Inventory int1=null;
 		
 		try {
+			LOGGER.debug("In getProducts controller based on product code...");
 			int1=service.getProducts(product_code);
 		}
 		catch(Exception e)
@@ -160,6 +165,7 @@ public class InventoryController {
 	{
 		List<String> list=null;
 		try {
+			LOGGER.debug("In get all categories controller using store id...");
 			list=service.findAll(store_id);
 		}
 		catch(Exception e)
@@ -182,6 +188,7 @@ public class InventoryController {
 	{
 		List<String> list = null;
 		try {
+			LOGGER.debug("In get all groups controller using store id...");
 			list=service.findAllGroups(store_id);
 		}
 		catch(Exception e)
@@ -205,6 +212,7 @@ public class InventoryController {
 		List<Inventory> list=null;
 		
 		try {
+			LOGGER.debug("In get products controller based on categories...");
 		 list=service.findByCategory(name);
 		}
 		catch(Exception e)
@@ -228,6 +236,7 @@ public class InventoryController {
 	{
 		List<Inventory> list= null;
 		try {
+			LOGGER.debug("In get products controller using multiple values...");
 			if(category!= null && group!=null)
 			{
 				list = service.findByMultipleValues1(name,category,group,id);		
@@ -267,6 +276,7 @@ public class InventoryController {
 		List<Inventory> list=null;
 			
 		try {
+			LOGGER.debug("In get products controller based on group...");
 			 list=service.findByGroup(group);
 		}
 		catch(Exception e)
